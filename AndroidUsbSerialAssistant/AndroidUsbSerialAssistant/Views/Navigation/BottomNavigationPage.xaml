@@ -6,6 +6,7 @@
             xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
             x:Class="AndroidUsbSerialAssistant.Views.Navigation.BottomNavigationPage"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:chat="clr-namespace:AndroidUsbSerialAssistant.Views.Chat;assembly=AndroidUsbSerialAssistant"
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
             android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
@@ -18,13 +19,20 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </TabbedPage.Resources>
-    <local:WorkspacePage Title="{x:Static resx:AppResources.Workspace}">
-        <local:WorkspacePage.IconImageSource>
+    <!-- <local:WorkspacePage Title="{x:Static resx:AppResources.Workspace}"> -->
+    <!--     <local:WorkspacePage.IconImageSource> -->
+    <!--         <FontImageSource FontFamily="{StaticResource FontIcons}" -->
+    <!--                          Glyph="{StaticResource PhotosIcon}" -->
+    <!--                          Size="11" /> -->
+    <!--     </local:WorkspacePage.IconImageSource> -->
+    <!-- </local:WorkspacePage> -->
+    <chat:ChatMessagePage Title="{x:Static resx:AppResources.Workspace}">
+        <chat:ChatMessagePage.IconImageSource>
             <FontImageSource FontFamily="{StaticResource FontIcons}"
                              Glyph="{StaticResource PhotosIcon}"
                              Size="11" />
-        </local:WorkspacePage.IconImageSource>
-    </local:WorkspacePage>
+        </chat:ChatMessagePage.IconImageSource>
+    </chat:ChatMessagePage>
     <local:SettingsPage Title="{x:Static resx:AppResources.Settings}">
         <local:SettingsPage.IconImageSource>
             <FontImageSource FontFamily="{StaticResource FontIcons}"
