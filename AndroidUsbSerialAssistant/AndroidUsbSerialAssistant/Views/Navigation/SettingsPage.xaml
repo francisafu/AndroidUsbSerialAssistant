@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    x:Class="AndroidUsbSerialAssistant.Views.Navigation.SettingsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:control="clr-namespace:AndroidUsbSerialAssistant.Controls"
+    xmlns:converter="clr-namespace:AndroidUsbSerialAssistant.Converters"
+    xmlns:enums="clr-namespace:AndroidUsbSerialDriver.Driver.SettingsEnum;assembly=AndroidUsbSerialDriver"
+    xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
+    xmlns:navigation="clr-namespace:AndroidUsbSerialAssistant.ViewModels.Navigation;assembly=AndroidUsbSerialAssistant"
+    Title="Settings"
+    BackgroundColor="{DynamicResource Gray-100}"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <navigation:SettingsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Title  -->
+                    <Label Grid.Row="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           Margin="0,4,0,0"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="CenterAndExpand"
+                           LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                           Text="{x:Static resx:AppResources.Settings}"
+                           TextColor="{DynamicResource Gray-900}"
+                           VerticalOptions="Center" />
+                </Grid>
+                <BoxView Style="{StaticResource BoxViewStyle}" />
+
+                <Grid Padding="15,5,15,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Center"
+                           LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                           TextColor="{DynamicResource Gray-900}"
+                           Text="{Binding Source={x:Static resx:AppResources.Baud_Rate},StringFormat='{0}: '}" />
+
+                    <border:SfBorder
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        BorderColor="{Binding Source={x:Reference BaudRateEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                        Style="{StaticResource FormBorderStyle}">
+                        <control:BorderlessEntry
+                            x:Name="BaudRateEntry"
+                            Placeholder="{x:Static resx:AppResources.Baud_Rate}"
+                            Style="{StaticResource EntryTextStyle}"
+                            Text="{Binding CurrentSettings.BaudRate}" />
+
+                    </border:SfBorder>
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Center"
+                           LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                           TextColor="{DynamicResource Gray-900}"
+                           Text="{Binding Source={x:Static resx:AppResources.Data_Bits},StringFormat='{0}: '}" />
+
+                    <border:SfBorder
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        BorderColor="{Binding Source={x:Reference DataBitsEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                        Style="{StaticResource FormBorderStyle}">
+                        <control:BorderlessEntry
+                            x:Name="DataBitsEntry"
+                            Placeholder="{x:Static resx:AppResources.Data_Bits}"
+                            Style="{StaticResource EntryTextStyle}"
+                            Text="{Binding CurrentSettings.DataBits}" />
+                    </border:SfBorder>
+
+
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Center"
+                           LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                           TextColor="{DynamicResource Gray-900}"
+                           Text="{Binding Source={x:Static resx:AppResources.Stop_Bits},StringFormat='{0}: '}" />
+
+                    <border:SfBorder
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Padding="0,0,0,0"
+                        BorderColor="{Binding Source={x:Reference StopBitsPicker}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                        Style="{StaticResource FormBorderStyle}">
+                        <control:EnumBindableComboBox
+                            x:TypeArguments="enums:StopBits"
+                            x:Name="StopBitsPicker"
+                            Style="{StaticResource ComboBoxStyle}"
+                            Watermark="{x:Static resx:AppResources.Stop_Bits}"
+                            SelectedItem="{Binding CurrentSettings.StopBits}">
+                            <combobox:SfComboBox.DropDownButtonSettings>
+                                <combobox:DropDownButtonSettings>
+                                    <combobox:DropDownButtonSettings.View>
+                                        <Label
+                                            FontFamily="{StaticResource FontIcons}"
+                                            FontSize="25"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{StaticResource DropDownButtonIcon}"
+                                            TextColor="{DynamicResource Gray-600}"
+                                            VerticalTextAlignment="Center" />
+                                    </combobox:DropDownButtonSettings.View>
+                                </combobox:DropDownButtonSettings>
+                            </combobox:SfComboBox.DropDownButtonSettings>
+                        </control:EnumBindableComboBox>
+                    </border:SfBorder>
+
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Center"
+                           LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                           TextColor="{DynamicResource Gray-900}"
+                           Text="{Binding Source={x:Static resx:AppResources.Parity},StringFormat='{0}: '}" />
+
+                    <border:SfBorder
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Padding="0,0,0,0"
+                        BorderColor="{Binding Source={x:Reference ParityPicker}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                        Style="{StaticResource FormBorderStyle}">
+                        <control:EnumBindableComboBox
+                            x:TypeArguments="enums:Parity"
+                            x:Name="ParityPicker"
+                            Style="{StaticResource ComboBoxStyle}"
+                            Watermark="{x:Static resx:AppResources.Parity}"
+                            SelectedItem="{Binding CurrentSettings.Parity}"
+                            SelectedIndex="0">
+                            <combobox:SfComboBox.DropDownButtonSettings>
+                                <combobox:DropDownButtonSettings>
+                                    <combobox:DropDownButtonSettings.View>
+                                        <Label
+                                            FontFamily="{StaticResource FontIcons}"
+                                            FontSize="25"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{StaticResource DropDownButtonIcon}"
+                                            TextColor="{DynamicResource Gray-600}"
+                                            VerticalTextAlignment="Center" />
+                                    </combobox:DropDownButtonSettings.View>
+                                </combobox:DropDownButtonSettings>
+                            </combobox:SfComboBox.DropDownButtonSettings>
+                        </control:EnumBindableComboBox>
+                    </border:SfBorder>
+
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource Montserrat-Medium}"
+                           FontSize="16"
+                           HeightRequest="45"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Center"
+                           LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                           TextColor="{DynamicResource Gray-900}"
+                           Text="{Binding Source={x:Static resx:AppResources.Frequency},StringFormat='{0}: '}" />
+
+                    <border:SfBorder
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        BorderColor="{Binding Source={x:Reference FrequencyEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=3}"
+                        Style="{StaticResource FormBorderStyle}">
+                        <control:BorderlessEntry
+                            x:Name="FrequencyEntry"
+                            Placeholder="{x:Static resx:AppResources.Frequency}"
+                            Style="{StaticResource EntryTextStyle}"
+                            Text="{Binding CurrentSettings.Frequency}" />
+                    </border:SfBorder>
+
+                </Grid>
+                <buttons:SfButton
+                    HorizontalOptions="Center"
+                    Command="{Binding SaveSettingsCommand}"
+                    Style="{StaticResource SfButtonStyle}"
+                    Text="{x:Static resx:AppResources.Save}"
+                    WidthRequest="200" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

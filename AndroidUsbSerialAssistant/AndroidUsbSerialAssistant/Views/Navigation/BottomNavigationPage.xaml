@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:AndroidUsbSerialAssistant.Views.Navigation"
+            xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
+            x:Class="AndroidUsbSerialAssistant.Views.Navigation.BottomNavigationPage"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
+            android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
+            BarBackgroundColor="White"
+            NavigationPage.HasNavigationBar="False">
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    <local:WorkspacePage Title="{x:Static resx:AppResources.Workspace}">
+        <local:WorkspacePage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                             Glyph="{StaticResource PhotosIcon}"
+                             Size="11" />
+        </local:WorkspacePage.IconImageSource>
+    </local:WorkspacePage>
+    <local:SettingsPage Title="{x:Static resx:AppResources.Settings}">
+        <local:SettingsPage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                             Glyph="{StaticResource SettingsIcon}"
+                             Size="11" />
+        </local:SettingsPage.IconImageSource>
+    </local:SettingsPage>
+    <local:RecordsPage Title="{x:Static resx:AppResources.Records}">
+        <local:RecordsPage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                             Glyph="{StaticResource AlbumsIcon}"
+                             Size="11" />
+        </local:RecordsPage.IconImageSource>
+    </local:RecordsPage>
+</TabbedPage>

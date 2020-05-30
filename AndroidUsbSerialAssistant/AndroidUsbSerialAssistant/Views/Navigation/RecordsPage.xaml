@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
+             x:Class="AndroidUsbSerialAssistant.Views.Navigation.RecordsPage"
+             BackgroundColor="{DynamicResource Gray-White}"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       FontFamily="{StaticResource Montserrat-Medium}"
+                       FontSize="16"
+                       Margin="0,4,0,0"
+                       HeightRequest="45"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                       Text="{x:Static resx:AppResources.Records}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Center" />
+
+                <BoxView Grid.Row="1" Style="{StaticResource BoxViewStyle}" />
+                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Received_Records}"
+                       Grid.Row="2" />
+                <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="2">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding }" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView Style="{StaticResource BoxViewStyle}" Grid.Row="3" />
+                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Sent_Records}"
+                       Grid.Row="4" />
+                <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="4">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding }" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView Style="{StaticResource BoxViewStyle}" Grid.Row="5" />
+                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Support_Devices}"
+                       Grid.Row="6" />
+                <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="6">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding }" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

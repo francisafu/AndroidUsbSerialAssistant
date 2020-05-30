@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AndroidUsbSerialAssistant.Views.Navigation.WorkspacePage"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:navigation="clr-namespace:AndroidUsbSerialAssistant.ViewModels.Navigation;assembly=AndroidUsbSerialAssistant"
+             xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
+             BackgroundColor="{DynamicResource Gray-White}"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <navigation:WorkspaceViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Padding="15,0,15,0" VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Title  -->
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       FontFamily="{StaticResource Montserrat-Medium}"
+                       FontSize="16"
+                       Margin="0,4,0,0"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Center"
+                       Text="{x:Static resx:AppResources.Receiving_Area}" />
+
+                <!-- Receiving Functions -->
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       FontFamily="{StaticResource Montserrat-Regular}"
+                       FontSize="16"
+                       Margin="0,4,0,0"
+                       HeightRequest="45"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Start"
+                       LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Center"
+                       Text="{Binding ReceivedDataCount}" />
+
+                <buttons:SfButton
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource SfButtonStyle}"
+                    Margin="0,0,10,0"
+                    WidthRequest="100"
+                    Command="{Binding PortCommand}"
+                    Text="{Binding PortStatus}" />
+
+                <buttons:SfButton
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource SfButtonStyle}"
+                    WidthRequest="100"
+                    Command="{Binding ClearReceivedCommand}"
+                    Text="{x:Static resx:AppResources.Clear}" />
+
+                <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxViewStyle}" />
+
+                <!-- Received Data Area -->
+                <ScrollView
+                    x:Name="ReceivedDataScrollView"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
+                    <Label
+                        x:Name="ReceivedDataLabel"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="14"
+                        LineHeight="1"
+                        TextColor="{DynamicResource Gray-900}"
+                        BackgroundColor="#fff4f4"
+                        Text="{Binding ReceivedOutPut}" />
+                </ScrollView>
+
+                <BoxView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxViewStyle}" />
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       FontFamily="{StaticResource Montserrat-Medium}"
+                       FontSize="16"
+                       Margin="0,4,0,0"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                       Text="{x:Static resx:AppResources.Sending_Area}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Center" />
+
+                <!-- Sending Functions -->
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       FontFamily="{StaticResource Montserrat-Regular}"
+                       FontSize="16"
+                       Margin="0,4,0,0"
+                       HeightRequest="45"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Start"
+                       LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Center"
+                       Text="{Binding SentDataCount}" />
+
+
+                <StackLayout
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="0,0,25,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               FontFamily="{StaticResource Montserrat-Regular}"
+                               FontSize="16"
+                               Margin="0,4,0,0"
+                               HeightRequest="45"
+                               VerticalTextAlignment="Center"
+                               TextColor="{DynamicResource Gray-900}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="EndAndExpand"
+                               Text="{x:Static resx:AppResources.Hex}" />
+                        <buttons:SfSwitch
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            AllowIndeterminateState="False"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"
+                            HeightRequest="30"
+                            VisualType="Cupertino"
+                            IsOn="{Binding IsHex}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="SentHexState">
+                                    <VisualState x:Name="SentHexOn">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <buttons:CupertinoSwitchSettings
+                                                        x:TypeArguments="buttons:OnState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource PrimaryColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="SentHexOff">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <buttons:CupertinoSwitchSettings
+                                                        x:TypeArguments="buttons:OffState"
+                                                        ThumbBorderColor="{DynamicResource Gray-200}"
+                                                        ThumbColor="{DynamicResource Gray-White}"
+                                                        TrackBorderColor="{DynamicResource Gray-200}"
+                                                        TrackColor="{DynamicResource Gray-White}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </buttons:SfSwitch>
+
+                    </Grid>
+                </StackLayout>
+
+                <buttons:SfButton
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource SfButtonStyle}"
+                    WidthRequest="100"
+                    Text="{x:Static resx:AppResources.Save}" />
+                <!-- Command="{Binding SubmitCommand}" -->
+
+                <!-- Sent Data Area -->
+
+                <Editor
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    x:Name="SendDataEntry"
+                    Placeholder="{x:Static resx:AppResources.Sent_Data_Area}"
+                    Style="{StaticResource EditorTextStyle}"
+                    IsTextPredictionEnabled="False"
+                    Text="{Binding DataToSend}" />
+
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       FontFamily="{StaticResource Montserrat-Regular}"
+                       FontSize="16"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Start"
+                       LineHeight="{OnPlatform Android=1,
+                                            Default=-1}"
+                       TextColor="{DynamicResource Gray-900}"
+                       VerticalOptions="Start"
+                       Text="{Binding CurrentDeviceName}" />
+
+                <buttons:SfButton
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    Style="{StaticResource SfButtonStyle}"
+                    WidthRequest="100"
+                    Margin="0,0,10,0"
+                    Text="{Binding AutoSendStatus}"
+                    Command="{Binding AutoSendCommand}" />
+
+                <buttons:SfButton
+                    Grid.Row="8"
+                    Grid.Column="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource SfButtonStyle}"
+                    WidthRequest="100"
+                    Text="{x:Static resx:AppResources.Manual}"
+                    Command="{Binding ManualSendCommand}" />
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
