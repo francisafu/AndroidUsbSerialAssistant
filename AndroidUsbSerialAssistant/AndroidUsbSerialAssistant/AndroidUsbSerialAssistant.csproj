@@ -59,13 +59,7 @@
     <EmbeddedResource Update="Views\Chat\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Chat\Templates\IncomingImageTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\Chat\Templates\IncomingTextTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Chat\Templates\OutgoingImageTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Chat\Templates\OutgoingTextTemplate.xaml">
@@ -105,9 +99,5 @@
     <Reference Include="Mono.Android.Export">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v4.4\Mono.Android.Export.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Renderers\" />
   </ItemGroup>
 </Project>

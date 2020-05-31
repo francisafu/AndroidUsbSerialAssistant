@@ -16,7 +16,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
             <local:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml" />
@@ -51,64 +50,26 @@
                         <behavior:ChatMessageListViewBehavior />
                     </listView:SfListView.Behaviors>
 
-                    <listView:SfListView.GroupHeaderTemplate>
-                        <DataTemplate>
-                            <Label
-                                Margin="0,16,0,0"
-                                FontFamily="{StaticResource Montserrat-Medium}"
-                                FontSize="12"
-                                HorizontalTextAlignment="Center"
-                                LineHeight="1.5"
-                                Text="{Binding Key, Converter={StaticResource DateTimeToStringConverter}}"
-                                TextColor="{DynamicResource Gray-700}" />
-                        </DataTemplate>
-                    </listView:SfListView.GroupHeaderTemplate>
-
                     <!--  Navigation bar  -->
                     <listView:SfListView.HeaderTemplate>
                         <DataTemplate>
                             <StackLayout
-                                Padding="10"
+                                Padding="5"
                                 BackgroundColor="{DynamicResource Gray-White}"
                                 HorizontalOptions="FillAndExpand"
                                 Orientation="Horizontal"
                                 Spacing="0"
                                 VerticalOptions="Fill">
 
-                                <!--  Back Button  -->
-                                <buttons:SfButton
-                                    Command="{Binding BackCommand}"
-                                    Style="{StaticResource NavigationBarButtonStyle}"
-                                    Text="{StaticResource Back}" />
-
-                                <!--  Rounded Profile Image  -->
-                                <border:SfBorder
-                                    Margin="8,0"
-                                    BackgroundColor="{DynamicResource Gray-200}"
-                                    Style="{StaticResource ProfileBorderStyle}">
-                                    <Image
-                                        HeightRequest="35"
-                                        WidthRequest="35">
-                                        <Image.Source>
-                                            <UriImageSource Uri="{Binding ProfileImage}" 
-			                                 CacheValidity="14" 
-			                                 CachingEnabled="true"/>
-                                        </Image.Source>
-                                    </Image>
-                                </border:SfBorder>
-
                                 <!--  Profile Name  -->
                                 <Label
                                     FontFamily="{StaticResource Montserrat-SemiBold}"
                                     FontSize="16"
                                     HorizontalOptions="FillAndExpand"
-                                    Text="{Binding ProfileName}"
                                     TextColor="{DynamicResource Gray-900}"
                                     VerticalOptions="Center"
-                                    VerticalTextAlignment="Center">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ProfileCommand}" />
-                                    </Label.GestureRecognizers>
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding ProfileName}">
                                 </Label>
 
                                 <!--  Video call button  -->
@@ -136,7 +97,7 @@
                     <!--  New text entry in the chat conversation  -->
                     <listView:SfListView.FooterTemplate>
                         <DataTemplate>
-                            <Grid Padding="16,5,16,24" ColumnSpacing="16">
+                            <Grid Padding="16,5,16,5" ColumnSpacing="16">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
@@ -163,7 +124,6 @@
 
                                         <!--  Extendable editor  -->
                                         <controls:BorderlessEditor
-                                            Placeholder="Type here"
                                             Style="{StaticResource ChatMessageEditorStyle}"
                                             Text="{Binding NewMessage}" />
 
