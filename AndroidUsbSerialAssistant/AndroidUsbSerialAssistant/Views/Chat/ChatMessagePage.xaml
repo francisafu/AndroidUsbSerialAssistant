@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="AndroidUsbSerialAssistant.Views.Chat.ChatMessagePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -41,7 +42,7 @@
                     IsStickyFooter="True"
                     IsStickyHeader="True"
                     ItemTemplate="{StaticResource MessageDataTemplateSelector}"
-                    ItemsSource="{Binding ChatMessageInfo}"
+                    ItemsSource="{Binding ChatMessageCollection}"
                     RowSpacing="12"
                     SelectionMode="None"
                     VerticalOptions="Fill">
@@ -61,7 +62,7 @@
                                 Spacing="0"
                                 VerticalOptions="Fill">
 
-                                <!--  Profile Name  -->
+                                <!--  Device Name  -->
                                 <Label
                                     FontFamily="{StaticResource Montserrat-SemiBold}"
                                     FontSize="16"
@@ -69,20 +70,19 @@
                                     TextColor="{DynamicResource Gray-900}"
                                     VerticalOptions="Center"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding ProfileName}">
-                                </Label>
+                                    Text="{Binding CurrentDeviceName}" />
 
-                                <!--  Video call button  -->
-                                <buttons:SfButton
-                                    Command="{Binding MakeVideoCall}"
-                                    Style="{StaticResource NavigationBarButtonStyle}"
-                                    Text="{StaticResource VideoCall}" />
+                                <!--  Start Receiving Button  -->
 
-                                <!--  Voice call button  -->
                                 <buttons:SfButton
-                                    Command="{Binding MakeVoiceCall}"
-                                    Style="{StaticResource NavigationBarButtonStyle}"
-                                    Text="{StaticResource VoiceCall}" />
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource SfButtonStyle}"
+                                    Margin="0,0,10,0"
+                                    WidthRequest="80"
+                                    HeightRequest="32"
+                                    Command="{Binding PortCommand}"
+                                    Text="{Binding PortStatus}" />
 
                                 <!--  Menu Button  -->
                                 <buttons:SfButton
@@ -94,7 +94,7 @@
                         </DataTemplate>
                     </listView:SfListView.HeaderTemplate>
 
-                    <!--  New text entry in the chat conversation  -->
+                    <!--  New Text Entry  -->
                     <listView:SfListView.FooterTemplate>
                         <DataTemplate>
                             <Grid Padding="16,5,16,5" ColumnSpacing="16">
@@ -122,12 +122,12 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <!--  Extendable editor  -->
+                                        <!--  Extendable Editor  -->
                                         <controls:BorderlessEditor
                                             Style="{StaticResource ChatMessageEditorStyle}"
                                             Text="{Binding NewMessage}" />
 
-                                        <!--  Camera Button  -->
+                                        <!--  GPS Button  -->
                                         <buttons:SfButton
                                             Grid.Column="1"
                                             Command="{Binding ShowCamera}"
@@ -135,7 +135,7 @@
                                             Text="{StaticResource Camera}"
                                             VerticalOptions="End" />
 
-                                        <!--  Attachment Button  -->
+                                        <!--  Auto Send Button  -->
                                         <buttons:SfButton
                                             Grid.Column="2"
                                             Command="{Binding SendAttachment}"
@@ -150,7 +150,7 @@
                                 <buttons:SfButton
                                     Grid.Column="1"
                                     BackgroundColor="{DynamicResource PrimaryColor}"
-                                    Command="{Binding SendCommand}"
+                                    Command="{Binding ManualSendCommand}"
                                     CornerRadius="20"
                                     HeightRequest="40"
                                     HorizontalOptions="End"

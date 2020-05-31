@@ -1,266 +1,376 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
+using AndroidUsbSerialAssistant.Database;
 using AndroidUsbSerialAssistant.Models.Chat;
+using AndroidUsbSerialAssistant.Resx;
+using AndroidUsbSerialAssistant.Services;
+using AndroidUsbSerialDriver.Driver.UsbSerialPort;
+using AndroidUsbSerialDriver.Extensions;
+using AndroidUsbSerialDriver.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace AndroidUsbSerialAssistant.ViewModels.Chat
 {
-    /// <summary>
-    ///     ViewModel for chat message page.
-    /// </summary>
     [Preserve(AllMembers = true)]
+    [DataContract]
     public class ChatMessageViewModel : BaseViewModel
     {
         #region Constructor
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ChatMessageViewModel" /> class.
-        /// </summary>
         public ChatMessageViewModel()
         {
-            MakeVoiceCall = new Command(VoiceCallClicked);
-            MakeVideoCall = new Command(VideoCallClicked);
-            MenuCommand = new Command(MenuClicked);
-            ShowCamera = new Command(CameraClicked);
-            SendAttachment = new Command(AttachmentClicked);
-            SendCommand = new Command(SendClicked);
-            BackCommand = new Command(BackButtonClicked);
-            ProfileCommand = new Command(ProfileClicked);
-
-            GenerateMessageInfo();
+            InitialSettings();
+            MessagingCenter.Subscribe<object>(this,
+                "SettingsUpdated",
+                sender => { UpdateSettings(); });
+            MessagingCenter.Subscribe<object>(this,
+                "DeviceDetached",
+                sender =>
+                {
+                    CurrentDeviceName = "";
+                    NotifyPropertyChanged(CurrentDeviceName);
+                });
+            ChatMessageCollection = new ObservableCollection<ChatMessage>();
         }
 
         #endregion
 
         #region Fields
 
-        /// <summary>
-        ///     Stores the message text in an array.
-        /// </summary>
-        private readonly string[] descriptions =
-        {
-            "Hi, can you tell me the specifications of the Dell Inspiron 5370 laptop?",
-            " * Processor: Intel Core i5-8250U processor "
-            + "\n"
-            + " * OS: Pre-loaded Windows 10 with lifetime validity"
-            + "\n"
-            + " * Display: 13.3-inch FHD (1920 x 1080) LED display"
-            + "\n"
-            + " * Memory: 8GB DDR RAM with Intel UHD 620 Graphics"
-            + "\n"
-            + " * Battery: Lithium battery",
-            "How much battery life does it have with wifi and without?",
-            "Approximately 5 hours with wifi. About 7 hours without."
-        };
+        private Command startCommand;
+        private Command pauseCommand;
+        private Command clearCommand;
+        private Command saveCommand;
+        private Command startAutoSendCommand;
+        private Command stopAutoSendCommand;
+        private Command manualSendCommand;
+        private Command getGpsCommand;
 
-        private string profileName = "Alex Russell";
+        private const int UsbWriteDataTimeOut = 200;
+        private static UsbSerialPort _port;
+        private static SerialInputOutputManager _serialIoManager;
+        private CancellationTokenSource _cancellationTokenSource;
+        private bool _isAutoSending;
+        private static int _receivedDataCount;
+        private static int _sentDataCount;
 
-        private string newMessage;
+        private static readonly SqliteSettingsStore SETTINGS_STORE =
+            new SqliteSettingsStore(App.Database);
 
-        private ObservableCollection<ChatMessage> chatMessageInfo =
+        private string _newMessage;
+
+        private ObservableCollection<ChatMessage> _chatMessageCollection =
             new ObservableCollection<ChatMessage>();
 
         #endregion
 
         #region Public Properties
 
-        /// <summary>
-        ///     Gets or sets the profile name.
-        /// </summary>
-        public string ProfileName
+        public string CurrentDeviceName { get; private set; }
+
+        public bool IsHex { get; set; }
+
+        public string ReceivedDataCount =>
+            $"{AppResources.Received}: {_receivedDataCount}";
+
+        public string SentDataCount => $"{AppResources.Sent}: {_sentDataCount}";
+
+        public string PortStatus
         {
-            get => profileName;
+            get
+            {
+                if (_serialIoManager != null && _serialIoManager.IsOpen)
+                    return AppResources.Pause;
+
+                return AppResources.Start;
+            }
+        }
+
+        public Command PortCommand
+        {
+            get
+            {
+                if (_serialIoManager != null && _serialIoManager.IsOpen)
+                    return PauseCommand;
+
+                return StartCommand;
+            }
+        }
+       
+        public Command ClearMessagesCommand =>
+            clearCommand ?? (clearCommand = new Command(ClearData));
+
+        public Command ManualSendCommand =>
+            manualSendCommand
+            ?? (manualSendCommand = new Command(ManualSendData));
+
+        public Command AutoSendCommand =>
+            _isAutoSending ? StopAutoSendCommand : StartAutoSendCommand;
+
+        public ObservableCollection<ChatMessage> ChatMessageCollection
+        {
+            get => _chatMessageCollection;
             set
             {
-                profileName = value;
+                _chatMessageCollection = value;
                 NotifyPropertyChanged();
             }
         }
 
-        /// <summary>
-        ///     Gets or sets a collection of chat messages.
-        /// </summary>
-        public ObservableCollection<ChatMessage> ChatMessageInfo
-        {
-            get => chatMessageInfo;
-            set
-            {
-                chatMessageInfo = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets a new message.
-        /// </summary>
         public string NewMessage
         {
-            get => newMessage;
+            get => _newMessage;
             set
             {
-                newMessage = value;
+                _newMessage = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public bool IsAutoSending
+        {
+            get => _isAutoSending;
+            set
+            {
+                _isAutoSending = value;
                 NotifyPropertyChanged();
             }
         }
 
         #endregion
 
-        #region Commands
+        #region Private Properties
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the profile name is clicked.
-        /// </summary>
-        public Command ProfileCommand { get; set; }
+        private Models.Settings CurrentSettings { get; set; }
+        private Command StartCommand =>
+            startCommand ?? (startCommand = new Command(StartReceiving));
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the voice call button is clicked.
-        /// </summary>
-        public Command MakeVoiceCall { get; set; }
+        private Command PauseCommand =>
+            pauseCommand
+            ?? (pauseCommand = new Command(async () =>
+            {
+                await PauseReceiving();
+            }));
+        private Command StartAutoSendCommand =>
+            startAutoSendCommand
+            ?? (startAutoSendCommand = new Command(AutoSendData));
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the video call button is clicked.
-        /// </summary>
-        public Command MakeVideoCall { get; set; }
+        private Command StopAutoSendCommand =>
+            stopAutoSendCommand
+            ?? (stopAutoSendCommand = new Command(StopAutoSend));
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the menu button is clicked.
-        /// </summary>
-        public Command MenuCommand { get; set; }
+        #endregion
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the camera button is clicked.
-        /// </summary>
-        public Command ShowCamera { get; set; }
+        #region Command Methods
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the attachment button is clicked.
-        /// </summary>
-        public Command SendAttachment { get; set; }
+        private async void StartReceiving()
+        {
+            if (App.UsbManager == null || App.PortInfo == null)
+            {
+                ToastService.ToastShortMessage(AppResources.No_Device);
+                return;
+            }
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the send button is clicked.
-        /// </summary>
-        public Command SendCommand { get; set; }
+            var driver =
+                await FindDriversService.GetSpecificDriverAsync(App.UsbManager,
+                    App.PortInfo);
+            if (driver != null)
+            {
+                _port = driver.Ports[App.PortInfo.PortNumber];
+            }
+            else
+            {
+                ToastService.ToastShortMessage(AppResources.No_Driver);
+                return;
+            }
 
-        /// <summary>
-        ///     Gets or sets the command that is executed when the back button is clicked.
-        /// </summary>
-        public Command BackCommand { get; set; }
+            CurrentDeviceName = _port.GetType().Name;
+            NotifyPropertyChanged(nameof(CurrentDeviceName));
+
+            _serialIoManager = new SerialInputOutputManager(_port)
+            {
+                BaudRate = CurrentSettings.BaudRate,
+                DataBits = CurrentSettings.DataBits,
+                StopBits = CurrentSettings.StopBits,
+                Parity = CurrentSettings.Parity
+            };
+            _serialIoManager.DataReceived += (sender, e) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    UpdateReceivedData(e.Data);
+                });
+            };
+            _serialIoManager.ErrorReceived += (sender, e) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    ToastService.ToastShortMessage(AppResources
+                        .Received_Error);
+                });
+            };
+            ToastService.ToastShortMessage(AppResources.Port_Listening);
+
+            try
+            {
+                _serialIoManager.Open(App.UsbManager);
+            }
+            catch (Exception)
+            {
+                ToastService.ToastShortMessage(
+                    $"{AppResources.Open_Failed}: {CurrentDeviceName}");
+            }
+            finally
+            {
+                NotifyPropertyChanged(nameof(PortCommand));
+                NotifyPropertyChanged(nameof(PortStatus));
+            }
+        }
+
+        private async Task PauseReceiving()
+        {
+            if (_serialIoManager == null || !_serialIoManager.IsOpen) return;
+            try
+            {
+                _serialIoManager.Close();
+                await Task.Run(async () =>
+                {
+                    while (_serialIoManager != null && _serialIoManager.IsOpen)
+                        await Task.Delay(200);
+                });
+                ToastService.ToastShortMessage(AppResources.Port_Closed);
+            }
+            catch (Exception)
+            {
+                ToastService.ToastShortMessage(AppResources.Port_Closed_Error);
+            }
+            finally
+            {
+                NotifyPropertyChanged(nameof(PortCommand));
+                NotifyPropertyChanged(nameof(PortStatus));
+            }
+        }
+
+        private void ClearData()
+        {
+            ChatMessageCollection.Clear();
+            _receivedDataCount = 0;
+            _sentDataCount = 0;
+            NotifyPropertyChanged(nameof(ChatMessageCollection));
+            NotifyPropertyChanged(nameof(ReceivedDataCount));
+            NotifyPropertyChanged(nameof(SentDataCount));
+        }
+
+        private void ManualSendData()
+        {
+            if (WriteData())
+            {
+                ChatMessageCollection.Add(new ChatMessage
+                {
+                    Message = NewMessage, Time = DateTime.Now
+                });
+                NewMessage = null;
+            }
+        }
+
+        private void AutoSendData()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = _cancellationTokenSource.Token;
+            cancellationToken.Register(() =>
+                ToastService.ToastShortMessage(AppResources.Stop_Auto_Send));
+            ToastService.ToastShortMessage(AppResources.Start_Auto_Send);
+            IsAutoSending = true;
+            NotifyPropertyChanged(nameof(AutoSendCommand));
+            Task.Run(async () =>
+                {
+                    while (!cancellationToken.IsCancellationRequested
+                           && WriteData())
+                    {
+                        ChatMessageCollection.Add(new ChatMessage
+                        {
+                            Message = NewMessage, Time = DateTime.Now
+                        });
+                        await Task.Delay(CurrentSettings.Frequency,
+                            cancellationToken);
+                    }
+                },
+                cancellationToken);
+        }
+
+        private void StopAutoSend()
+        {
+            _cancellationTokenSource.Cancel();
+            IsAutoSending = false;
+            NewMessage = null;
+            NotifyPropertyChanged(nameof(AutoSendCommand));
+        }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///     base
-        ///     Initializes a collection and add it to the message items.
-        /// </summary>
-        private void GenerateMessageInfo()
+        private async void UpdateSettings()
         {
-            var currentTime = DateTime.Now;
-            ChatMessageInfo = new ObservableCollection<ChatMessage>
+            CurrentSettings = await SETTINGS_STORE.GetAsync(1);
+        }
+
+        private void InitialSettings()
+        {
+            UpdateSettings();
+            if (CurrentSettings == null)
+                MessagingCenter.Subscribe<object>(this,
+                    "DatabaseInitialized",
+                    sender =>
+                    {
+                        UpdateSettings();
+                        if (CurrentSettings != null)
+                            MessagingCenter.Unsubscribe<object>(this,
+                                "DatabaseInitialized");
+                    });
+        }
+
+        private void UpdateReceivedData(byte[] data)
+        {
+            var message = IsHex
+                ? $"Hex: {FormatConverter.ByteArrayToHexString(data)}\n½âÂë: {FormatConverter.ByteArrayToString(data)}"
+                : $"{FormatConverter.ByteArrayToString(data)}";
+            ChatMessageCollection.Add(new ChatMessage
             {
-                new ChatMessage
-                {
-                    Message = descriptions[0],
-                    Time = currentTime.AddMinutes(-2517),
-                    IsReceived = true
-                },
-                new ChatMessage
-                {
-                    Message = descriptions[1],
-                    Time = currentTime.AddMinutes(-2408)
-                },
-                new ChatMessage
-                {
-                    Message = descriptions[2],
-                    Time = currentTime.AddMinutes(-1103),
-                    IsReceived = true
-                },
-                new ChatMessage
-                {
-                    Message = descriptions[3],
-                    Time = currentTime.AddMinutes(-1006)
-                }
-            };
+                Message = message, Time = DateTime.Now,
+                IsReceived = true
+            });
+            _receivedDataCount++;
+            NotifyPropertyChanged(nameof(ReceivedDataCount));
         }
 
-        /// <summary>
-        ///     Invoked when the voice call button is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void VoiceCallClicked(object obj)
+        private bool WriteData()
         {
-            // Do something
-        }
+            if (string.IsNullOrWhiteSpace(NewMessage)
+                || !_serialIoManager.IsOpen) return false;
+            var data = IsHex
+                ? FormatConverter.HexStringToByteArray(
+                    NewMessage.Replace(Environment.NewLine, " "))
+                : FormatConverter.StringToByteArray(
+                    NewMessage.Replace(Environment.NewLine, " "));
 
-        /// <summary>
-        ///     Invoked when the video call button is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void VideoCallClicked(object obj)
-        {
-            // Do something
-        }
+            try
+            {
+                _port.Write(data, UsbWriteDataTimeOut);
+            }
+            catch (Exception)
+            {
+                ToastService.ToastShortMessage(AppResources.Write_Failed);
+                return false;
+            }
 
-        /// <summary>
-        ///     Invoked when the menu button is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void MenuClicked(object obj)
-        {
-            // Do something
-        }
-
-        /// <summary>
-        ///     Invoked when the camera icon is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void CameraClicked(object obj)
-        {
-            // Do something
-        }
-
-        /// <summary>
-        ///     Invoked when the attachment icon is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void AttachmentClicked(object obj)
-        {
-            // Do something
-        }
-
-        /// <summary>
-        ///     Invoked when the send button is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void SendClicked(object obj)
-        {
-            if (!string.IsNullOrWhiteSpace(NewMessage))
-                ChatMessageInfo.Add(new ChatMessage
-                {
-                    Message = NewMessage, Time = DateTime.Now
-                });
-
-            NewMessage = null;
-        }
-
-        /// <summary>
-        ///     Invoked when the back button is clicked.
-        /// </summary>
-        /// <param name="obj">The object</param>
-        private void BackButtonClicked(object obj)
-        {
-            // Do something
-        }
-
-        /// <summary>
-        ///     Invoked when the Profile name is clicked.
-        /// </summary>
-        private void ProfileClicked(object obj)
-        {
-            // Do something
+            _sentDataCount++;
+            NotifyPropertyChanged(nameof(SentDataCount));
+            return true;
         }
 
         #endregion

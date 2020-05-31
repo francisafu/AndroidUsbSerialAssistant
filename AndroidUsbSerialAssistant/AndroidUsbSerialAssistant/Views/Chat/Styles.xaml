@@ -51,6 +51,26 @@
         <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
     </Style>
 
+    <!--  Common style for buttons  -->
+    <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundGradient">
+            <Setter.Value>
+                <gradient:SfLinearGradientBrush>
+                    <gradient:SfLinearGradientBrush.GradientStops>
+                        <gradient:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+                        <gradient:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                    </gradient:SfLinearGradientBrush.GradientStops>
+                </gradient:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="HorizontalOptions" Value="End" />
+    </Style>
+
     <!--  Common style for swipe template content border control  -->
     <Style x:Key="SwipeTemplateBorderStyle" TargetType="buttons:SfButton">
         <Setter Property="HeightRequest" Value="32" />
