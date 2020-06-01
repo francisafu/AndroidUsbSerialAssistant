@@ -11,30 +11,11 @@
     <Color x:Key="Transparent">Transparent</Color>
 
     <!--  Font Icon Text  -->
-    <x:String x:Key="Back">&#xe709;</x:String>
-    <x:String x:Key="Search">&#xe705;</x:String>
-    <x:String x:Key="Menu">&#xe719;</x:String>
-    <x:String x:Key="VoiceCall">&#xe71c;</x:String>
-    <x:String x:Key="VideoCall">&#xe721;</x:String>
-    <x:String x:Key="Settings">&#xe715;</x:String>
-    <x:String x:Key="Camera">&#xe713;</x:String>
-    <x:String x:Key="Attachment">&#xe71e;</x:String>
-    <x:String x:Key="Send">&#xe71f;</x:String>
-    <x:String x:Key="Sent">&#xe717;</x:String>
-    <x:String x:Key="Received">&#xe71b;</x:String>
-    <x:String x:Key="Viewed">&#xe71b;</x:String>
-    <x:String x:Key="New">&#xe720;</x:String>
-    <x:String x:Key="Audio">&#xe722;</x:String>
-    <x:String x:Key="Photo">&#xe71d;</x:String>
-    <x:String x:Key="Video">&#xe718;</x:String>
-    <x:String x:Key="Contact">&#xe723;</x:String>
-    <x:String x:Key="Available">&#xe720;</x:String>
-    <x:String x:Key="Next">&#xe71a;</x:String>
-    <x:String x:Key="Mail">&#xe725;</x:String>
-    <x:String x:Key="Notification">&#xe700;</x:String>
-    <x:String x:Key="Help">&#xe72c;</x:String>
-    <x:String x:Key="Edit">&#xe727;</x:String>
-    <x:String x:Key="PhoneFill">&#xe72a;</x:String>
+    <x:String x:Key="Menu">&#xf142;</x:String>
+    <x:String x:Key="Gps">&#xe808;</x:String>
+    <x:String x:Key="AutoSend">&#xe809;</x:String>
+    <x:String x:Key="Send">&#xf1d8;</x:String>
+    <x:String x:Key="Next">&#xe801;</x:String>
 
     <!--  Common style for Navigation bar SfButton  -->
     <Style x:Key="NavigationBarButtonStyle" TargetType="buttons:SfButton">

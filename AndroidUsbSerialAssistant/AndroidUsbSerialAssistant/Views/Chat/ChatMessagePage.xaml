@@ -134,7 +134,7 @@
                                             CornerRadius="20"
                                             Command="{Binding ShowCamera}"
                                             Style="{StaticResource NavigationBarButtonStyle}"
-                                            Text="{StaticResource Camera}"
+                                            Text="{StaticResource Gps}"
                                             VerticalOptions="End" />
 
                                         <!--  Auto Send Button  -->
@@ -144,7 +144,7 @@
                                             BackgroundColor="{Binding IsAutoSending, Converter={StaticResource ColorConverter}, ConverterParameter=9}"
                                             Command="{Binding AutoSendCommand}"
                                             Style="{StaticResource NavigationBarButtonStyle}"
-                                            Text="{StaticResource Attachment}"
+                                            Text="{StaticResource AutoSend}"
                                             VerticalOptions="End" />
 
                                     </Grid>
