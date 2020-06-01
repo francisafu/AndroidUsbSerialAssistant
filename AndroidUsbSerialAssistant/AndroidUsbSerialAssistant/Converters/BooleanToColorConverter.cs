@@ -78,6 +78,12 @@ namespace AndroidUsbSerialAssistant.Converters
                     Application.Current.Resources.TryGetValue("Gray-White",
                         out var graywhite);
                     return (Color) graywhite;
+                case "9" when (bool)value:
+                    Application.Current.Resources.TryGetValue("PrimaryColor",
+                        out var primaryval);
+                    return (Color)primaryval;
+                case "9":
+                    return Color.Transparent;
                 default:
                     return Color.Transparent;
             }

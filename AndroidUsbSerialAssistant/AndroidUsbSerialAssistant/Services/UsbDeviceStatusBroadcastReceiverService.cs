@@ -10,17 +10,6 @@ using Application = Android.App.Application;
 namespace AndroidUsbSerialAssistant.Services
 {
     [BroadcastReceiver(Enabled = true)]
-    // The following line is used to received the USB device attached notification
-    [IntentFilter(new[]
-    {
-        UsbManager.ActionUsbDeviceAttached,
-        UsbManager.ActionUsbDeviceDetached
-    })]
-    // The following line is used to limit the devices that could be found to what we want
-    [MetaData(UsbManager.ActionUsbDeviceAttached,
-        Resource = "@xml/device_filter")]
-    [MetaData(UsbManager.ActionUsbDeviceDetached,
-        Resource = "@xml/device_filter")]
     public class UsbDeviceStatusBroadcastReceiverService : BroadcastReceiver
     {
         public override async void OnReceive(Context context, Intent intent)

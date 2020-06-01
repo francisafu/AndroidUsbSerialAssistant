@@ -4,7 +4,6 @@
     x:Class="AndroidUsbSerialAssistant.Views.Chat.ChatMessagePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behavior="clr-namespace:AndroidUsbSerialAssistant.Behaviors.Chat"
     xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:controls="clr-namespace:AndroidUsbSerialAssistant.Controls"
@@ -12,11 +11,13 @@
     xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     xmlns:local="clr-namespace:AndroidUsbSerialAssistant.Views.Chat"
     xmlns:viewModel="clr-namespace:AndroidUsbSerialAssistant.ViewModels.Chat"
+    xmlns:behaviors="clr-namespace:AndroidUsbSerialAssistant.Behaviors;assembly=AndroidUsbSerialAssistant"
     BackgroundImage="ChatMessageBackground.png"
     NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
             <local:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml" />
@@ -48,7 +49,7 @@
                     VerticalOptions="Fill">
 
                     <listView:SfListView.Behaviors>
-                        <behavior:ChatMessageListViewBehavior />
+                        <behaviors:ChatMessageListViewBehavior />
                     </listView:SfListView.Behaviors>
 
                     <!--  Navigation bar  -->
@@ -130,6 +131,7 @@
                                         <!--  GPS Button  -->
                                         <buttons:SfButton
                                             Grid.Column="1"
+                                            CornerRadius="20"
                                             Command="{Binding ShowCamera}"
                                             Style="{StaticResource NavigationBarButtonStyle}"
                                             Text="{StaticResource Camera}"
@@ -138,7 +140,9 @@
                                         <!--  Auto Send Button  -->
                                         <buttons:SfButton
                                             Grid.Column="2"
-                                            Command="{Binding SendAttachment}"
+                                            CornerRadius="20"
+                                            BackgroundColor="{Binding IsAutoSending, Converter={StaticResource ColorConverter}, ConverterParameter=9}"
+                                            Command="{Binding AutoSendCommand}"
                                             Style="{StaticResource NavigationBarButtonStyle}"
                                             Text="{StaticResource Attachment}"
                                             VerticalOptions="End" />

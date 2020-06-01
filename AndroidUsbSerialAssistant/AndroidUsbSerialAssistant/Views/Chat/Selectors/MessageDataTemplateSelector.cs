@@ -1,4 +1,4 @@
-﻿using AndroidUsbSerialAssistant.Models.Chat;
+﻿using AndroidUsbSerialAssistant.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;

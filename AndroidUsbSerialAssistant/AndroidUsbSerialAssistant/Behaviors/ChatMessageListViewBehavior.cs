@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace AndroidUsbSerialAssistant.Behaviors.Chat
+namespace AndroidUsbSerialAssistant.Behaviors
 {
     /// <summary>
     /// This class extends the behavior of SfListView control to keep the most recent messages in the view when a new message is added.

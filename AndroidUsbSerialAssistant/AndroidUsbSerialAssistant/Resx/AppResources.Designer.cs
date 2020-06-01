@@ -61,20 +61,20 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Auto 的本地化字符串。
-        /// </summary>
-        public static string Auto {
-            get {
-                return ResourceManager.GetString("Auto", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Baud Rate 的本地化字符串。
         /// </summary>
         public static string Baud_Rate {
             get {
                 return ResourceManager.GetString("Baud Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Chat 的本地化字符串。
+        /// </summary>
+        public static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
         
@@ -106,6 +106,24 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Favour 的本地化字符串。
+        /// </summary>
+        public static string Favour {
+            get {
+                return ResourceManager.GetString("Favour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Favour Message 的本地化字符串。
+        /// </summary>
+        public static string FavourMessage {
+            get {
+                return ResourceManager.GetString("FavourMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Frequency 的本地化字符串。
         /// </summary>
         public static string Frequency {
@@ -129,15 +147,6 @@ namespace AndroidUsbSerialAssistant.Resx {
         public static string Known_Device {
             get {
                 return ResourceManager.GetString("Known Device", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Manual 的本地化字符串。
-        /// </summary>
-        public static string Manual {
-            get {
-                return ResourceManager.GetString("Manual", resourceCulture);
             }
         }
         
@@ -241,33 +250,6 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Received Records 的本地化字符串。
-        /// </summary>
-        public static string Received_Records {
-            get {
-                return ResourceManager.GetString("Received Records", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Receiving Area 的本地化字符串。
-        /// </summary>
-        public static string Receiving_Area {
-            get {
-                return ResourceManager.GetString("Receiving Area", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Records 的本地化字符串。
-        /// </summary>
-        public static string Records {
-            get {
-                return ResourceManager.GetString("Records", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Save 的本地化字符串。
         /// </summary>
         public static string Save {
@@ -295,11 +277,11 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Sending Area 的本地化字符串。
+        ///   查找类似 Send Failed 的本地化字符串。
         /// </summary>
-        public static string Sending_Area {
+        public static string Send_Error {
             get {
-                return ResourceManager.GetString("Sending Area", resourceCulture);
+                return ResourceManager.GetString("Send Error", resourceCulture);
             }
         }
         
@@ -309,24 +291,6 @@ namespace AndroidUsbSerialAssistant.Resx {
         public static string Sent {
             get {
                 return ResourceManager.GetString("Sent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Sent Data Area 的本地化字符串。
-        /// </summary>
-        public static string Sent_Data_Area {
-            get {
-                return ResourceManager.GetString("Sent Data Area", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Sent Records 的本地化字符串。
-        /// </summary>
-        public static string Sent_Records {
-            get {
-                return ResourceManager.GetString("Sent Records", resourceCulture);
             }
         }
         
@@ -349,7 +313,7 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Auto send started 的本地化字符串。
+        ///   查找类似 Auto Send Started 的本地化字符串。
         /// </summary>
         public static string Start_Auto_Send {
             get {
@@ -358,16 +322,7 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Stop 的本地化字符串。
-        /// </summary>
-        public static string Stop {
-            get {
-                return ResourceManager.GetString("Stop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Auto send stopped 的本地化字符串。
+        ///   查找类似 Auto Send Stopped 的本地化字符串。
         /// </summary>
         public static string Stop_Auto_Send {
             get {
@@ -399,15 +354,6 @@ namespace AndroidUsbSerialAssistant.Resx {
         public static string Unknown_Device {
             get {
                 return ResourceManager.GetString("Unknown Device", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Workspace 的本地化字符串。
-        /// </summary>
-        public static string Workspace {
-            get {
-                return ResourceManager.GetString("Workspace", resourceCulture);
             }
         }
         

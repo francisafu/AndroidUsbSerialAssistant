@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using AndroidUsbSerialAssistant.Database;
-using AndroidUsbSerialAssistant.Models.Chat;
+using AndroidUsbSerialAssistant.Models;
 using AndroidUsbSerialAssistant.Resx;
 using AndroidUsbSerialAssistant.Services;
 using AndroidUsbSerialDriver.Driver.UsbSerialPort;
@@ -207,11 +207,9 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             };
             _serialIoManager.ErrorReceived += (sender, e) =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    ToastService.ToastShortMessage(AppResources
+                ToastService.ToastShortMessage(AppResources
                         .Received_Error);
-                });
+                
             };
             ToastService.ToastShortMessage(AppResources.Port_Listening);
 
@@ -275,6 +273,10 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
                 });
                 NewMessage = null;
             }
+            else
+            {
+                ToastService.ToastShortMessage(AppResources.Send_Error);
+            }
         }
 
         private void AutoSendData()
@@ -298,6 +300,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
                         await Task.Delay(CurrentSettings.Frequency,
                             cancellationToken);
                     }
+                    StopAutoSend();
                 },
                 cancellationToken);
         }

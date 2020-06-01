@@ -23,8 +23,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0"
                        FontFamily="{StaticResource Montserrat-Medium}"
@@ -35,12 +33,12 @@
                        HorizontalOptions="CenterAndExpand"
                        LineHeight="{OnPlatform Android=1.5,
                                             Default=-1}"
-                       Text="{x:Static resx:AppResources.Records}"
+                       Text="{x:Static resx:AppResources.Favour}"
                        TextColor="{DynamicResource Gray-900}"
                        VerticalOptions="Center" />
 
                 <BoxView Grid.Row="1" Style="{StaticResource BoxViewStyle}" />
-                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Received_Records}"
+                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.FavourMessage}"
                        Grid.Row="2" />
                 <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="2">
                     <Label.GestureRecognizers>
@@ -48,17 +46,9 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <BoxView Style="{StaticResource BoxViewStyle}" Grid.Row="3" />
-                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Sent_Records}"
+                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Support_Devices}"
                        Grid.Row="4" />
                 <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="4">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding }" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <BoxView Style="{StaticResource BoxViewStyle}" Grid.Row="5" />
-                <Label Style="{StaticResource RecordsLabelStyle}" Text="{x:Static resx:AppResources.Support_Devices}"
-                       Grid.Row="6" />
-                <Label Style="{StaticResource RecordsIconStyle}" Grid.Row="6">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding }" />
                     </Label.GestureRecognizers>

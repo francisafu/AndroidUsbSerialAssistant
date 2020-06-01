@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Xamarin.Forms.Internals;
 
-namespace AndroidUsbSerialAssistant.Models.Chat
+namespace AndroidUsbSerialAssistant.Models
 {
     /// <summary>
     ///     Model for chat message

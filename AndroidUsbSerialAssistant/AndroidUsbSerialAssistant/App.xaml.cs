@@ -11,7 +11,6 @@ using AndroidUsbSerialDriver.Extensions;
 using Xamarin.Forms;
 using Application = Android.App.Application;
 
-[assembly: UsesFeature("android.hardware.usb.host")] // To enable the USB host
 
 namespace AndroidUsbSerialAssistant
 {

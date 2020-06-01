@@ -19,14 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </TabbedPage.Resources>
-    <!-- <local:WorkspacePage Title="{x:Static resx:AppResources.Workspace}"> -->
-    <!--     <local:WorkspacePage.IconImageSource> -->
-    <!--         <FontImageSource FontFamily="{StaticResource FontIcons}" -->
-    <!--                          Glyph="{StaticResource PhotosIcon}" -->
-    <!--                          Size="11" /> -->
-    <!--     </local:WorkspacePage.IconImageSource> -->
-    <!-- </local:WorkspacePage> -->
-    <chat:ChatMessagePage Title="{x:Static resx:AppResources.Workspace}">
+    <chat:ChatMessagePage Title="{x:Static resx:AppResources.Chat}">
         <chat:ChatMessagePage.IconImageSource>
             <FontImageSource FontFamily="{StaticResource FontIcons}"
                              Glyph="{StaticResource PhotosIcon}"
@@ -40,7 +33,7 @@
                              Size="11" />
         </local:SettingsPage.IconImageSource>
     </local:SettingsPage>
-    <local:RecordsPage Title="{x:Static resx:AppResources.Records}">
+    <local:RecordsPage Title="{x:Static resx:AppResources.Favour}">
         <local:RecordsPage.IconImageSource>
             <FontImageSource FontFamily="{StaticResource FontIcons}"
                              Glyph="{StaticResource AlbumsIcon}"

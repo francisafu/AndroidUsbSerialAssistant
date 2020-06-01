@@ -42,8 +42,6 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         private Command startCommand;
         private Command pauseCommand;
         private Command clearReceivedCommand;
-        private Command saveSentCommand;
-        private Command saveReceivedCommand;
         private Command startAutoSendCommand;
         private Command stopAutoSendCommand;
         private Command manualSendCommand;
@@ -122,9 +120,6 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
 
         public Command ManualSendCommand =>
             manualSendCommand ?? (manualSendCommand = new Command(SendData));
-
-        public string AutoSendStatus =>
-            _isAutoSending ? AppResources.Stop : AppResources.Auto;
 
         public Command AutoSendCommand =>
             _isAutoSending ? StopAutoSendCommand : StartAutoSendCommand;
@@ -249,12 +244,12 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         {
             _cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = _cancellationTokenSource.Token;
-            cancellationToken.Register(() =>
-                ToastService.ToastShortMessage(AppResources.Stop_Auto_Send));
-            ToastService.ToastShortMessage(AppResources.Start_Auto_Send);
+            cancellationToken.Register(() => _isAutoSending = false);
+            // () => ToastService.ToastShortMessage(AppResources.Stop_Auto_Send)
+            // ToastService.ToastShortMessage(AppResources.Start_Auto_Send);
             _isAutoSending = true;
             NotifyPropertyChanged(nameof(AutoSendCommand));
-            NotifyPropertyChanged(nameof(AutoSendStatus));
+            // NotifyPropertyChanged(nameof(AutoSendStatus));
             Task.Run(async () =>
                 {
                     while (!cancellationToken.IsCancellationRequested)
@@ -272,7 +267,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
             _cancellationTokenSource.Cancel();
             _isAutoSending = false;
             NotifyPropertyChanged(nameof(AutoSendCommand));
-            NotifyPropertyChanged(nameof(AutoSendStatus));
+            // NotifyPropertyChanged(nameof(AutoSendStatus));
         }
 
         #endregion
