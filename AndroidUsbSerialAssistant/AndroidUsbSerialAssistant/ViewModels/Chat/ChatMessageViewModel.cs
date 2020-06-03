@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using AndroidLocation;
+using AndroidLocation.AndroidLocationService;
 using AndroidUsbSerialAssistant.Database;
 using AndroidUsbSerialAssistant.Models;
 using AndroidUsbSerialAssistant.Resx;
@@ -48,7 +50,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         private Command startAutoSendCommand;
         private Command stopAutoSendCommand;
         private Command manualSendCommand;
-        private Command getGpsCommand;
+        private Command getLocationCommand;
 
         private const int UsbWriteDataTimeOut = 200;
         private static UsbSerialPort _port;
@@ -60,6 +62,9 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
 
         private static readonly SqliteSettingsStore SETTINGS_STORE =
             new SqliteSettingsStore(App.Database);
+
+        private ILocationService
+            _locationService = new AndroidLocationService();
 
         private string _newMessage;
 
@@ -100,7 +105,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
                 return StartCommand;
             }
         }
-       
+
         public Command ClearMessagesCommand =>
             clearCommand ?? (clearCommand = new Command(ClearData));
 
@@ -110,6 +115,11 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
 
         public Command AutoSendCommand =>
             _isAutoSending ? StopAutoSendCommand : StartAutoSendCommand;
+
+        public Command GetLocationCommand =>
+            getLocationCommand
+            ?? (getLocationCommand = new Command(GetCurrentLocation));
+
 
         public ObservableCollection<ChatMessage> ChatMessageCollection
         {
@@ -146,6 +156,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         #region Private Properties
 
         private Models.Settings CurrentSettings { get; set; }
+
         private Command StartCommand =>
             startCommand ?? (startCommand = new Command(StartReceiving));
 
@@ -155,6 +166,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             {
                 await PauseReceiving();
             }));
+
         private Command StartAutoSendCommand =>
             startAutoSendCommand
             ?? (startAutoSendCommand = new Command(AutoSendData));
@@ -207,9 +219,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             };
             _serialIoManager.ErrorReceived += (sender, e) =>
             {
-                ToastService.ToastShortMessage(AppResources
-                        .Received_Error);
-                
+                ToastService.ToastShortMessage(AppResources.Received_Error);
             };
             ToastService.ToastShortMessage(AppResources.Port_Listening);
 
@@ -300,6 +310,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
                         await Task.Delay(CurrentSettings.Frequency,
                             cancellationToken);
                     }
+
                     StopAutoSend();
                 },
                 cancellationToken);
@@ -311,6 +322,21 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             IsAutoSending = false;
             NewMessage = null;
             NotifyPropertyChanged(nameof(AutoSendCommand));
+        }
+
+        private async void GetCurrentLocation()
+        {
+            var location = await _locationService.GetLocation();
+            if (location != null)
+            {
+                NewMessage =
+                    $"{AppResources.Longitude}: {location.Longitude}, {AppResources.Latitude}: {location.Latitude}, {AppResources.Altitude}: {location.Altitude}";
+            }
+            else
+            {
+                ToastService.ToastShortMessage(AppResources
+                    .Get_Location_Failed);
+            }
         }
 
         #endregion
@@ -344,8 +370,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
                 : $"{FormatConverter.ByteArrayToString(data)}";
             ChatMessageCollection.Add(new ChatMessage
             {
-                Message = message, Time = DateTime.Now,
-                IsReceived = true
+                Message = message, Time = DateTime.Now, IsReceived = true
             });
             _receivedDataCount++;
             NotifyPropertyChanged(nameof(ReceivedDataCount));

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Altitude" xml:space="preserve">
+    <value>海拔</value>
+  </data>
   <data name="Baud Rate" xml:space="preserve">
     <value>波特率</value>
   </data>
@@ -141,11 +144,20 @@
   <data name="Frequency" xml:space="preserve">
     <value>频    率</value>
   </data>
+  <data name="Get Location Failed" xml:space="preserve">
+    <value>获取位置失败！</value>
+  </data>
   <data name="Hex" xml:space="preserve">
     <value>Hex</value>
   </data>
   <data name="Known Device" xml:space="preserve">
     <value>设备已连接并可以使用</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>纬度</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>经度</value>
   </data>
   <data name="No Device" xml:space="preserve">
     <value>未找到设备</value>

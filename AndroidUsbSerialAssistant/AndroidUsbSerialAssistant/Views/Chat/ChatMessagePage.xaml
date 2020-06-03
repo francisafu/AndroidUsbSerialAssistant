@@ -132,7 +132,7 @@
                                         <buttons:SfButton
                                             Grid.Column="1"
                                             CornerRadius="20"
-                                            Command="{Binding ShowCamera}"
+                                            Command="{Binding GetLocationCommand}"
                                             Style="{StaticResource NavigationBarButtonStyle}"
                                             Text="{StaticResource Gps}"
                                             VerticalOptions="End" />

@@ -61,6 +61,15 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Altitude 的本地化字符串。
+        /// </summary>
+        public static string Altitude {
+            get {
+                return ResourceManager.GetString("Altitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Baud Rate 的本地化字符串。
         /// </summary>
         public static string Baud_Rate {
@@ -133,6 +142,15 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Get location failed 的本地化字符串。
+        /// </summary>
+        public static string Get_Location_Failed {
+            get {
+                return ResourceManager.GetString("Get Location Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Hex 的本地化字符串。
         /// </summary>
         public static string Hex {
@@ -147,6 +165,24 @@ namespace AndroidUsbSerialAssistant.Resx {
         public static string Known_Device {
             get {
                 return ResourceManager.GetString("Known Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Latitude 的本地化字符串。
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Longitude 的本地化字符串。
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
             }
         }
         

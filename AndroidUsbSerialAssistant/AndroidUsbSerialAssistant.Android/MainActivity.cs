@@ -7,7 +7,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Platform = Xamarin.Essentials.Platform;
 
-[assembly: UsesFeature("android.hardware.usb.host")] // To enable the USB host
 
 namespace AndroidUsbSerialAssistant.Droid
 {
