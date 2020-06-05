@@ -26,6 +26,13 @@ namespace AndroidUsbSerialAssistant
 
         public App()
         {
+            // Put your Syncfusion License Key here.
+            // Comment out this line if you don't have one
+            // Or you can claim a community license from here:
+            // https://www.syncfusion.com/products/communitylicense
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+                LicenseKey.LICENSE_KEY);
+
             InitializeComponent();
 
             MainPage = new BottomNavigationPage();

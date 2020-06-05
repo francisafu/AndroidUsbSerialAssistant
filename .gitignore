@@ -6,6 +6,9 @@
 # App Debug Error Log
 AndroidUsbSerialAssistantError*.log
 
+# License Key
+LicenseKey.cs
+
 # User-specific files
 *.rsuser
 *.suo
