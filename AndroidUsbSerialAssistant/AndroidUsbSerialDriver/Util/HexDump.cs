@@ -115,7 +115,10 @@ namespace AndroidUsbSerialDriver.Util
             return ToHexString(ToByteArray(i));
         }
 
-        public static byte[] ToByteArray(byte b) { return new[] {b}; }
+        public static byte[] ToByteArray(byte b)
+        {
+            return new[] {b};
+        }
 
         public static byte[] ToByteArray(int i)
         {

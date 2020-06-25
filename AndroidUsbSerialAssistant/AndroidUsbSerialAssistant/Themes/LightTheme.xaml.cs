@@ -7,6 +7,9 @@ namespace AndroidUsbSerialAssistant.Themes
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LightTheme
     {
-        public LightTheme() { InitializeComponent(); }
+        public LightTheme()
+        {
+            InitializeComponent();
+        }
     }
 }

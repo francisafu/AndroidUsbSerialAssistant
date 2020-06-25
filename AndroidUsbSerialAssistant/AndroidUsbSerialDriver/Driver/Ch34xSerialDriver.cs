@@ -54,7 +54,10 @@ namespace AndroidUsbSerialDriver.Driver
 
             private string TAG => (Driver as Ch34xSerialDriver)?.TAG;
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             public override void Open(UsbDeviceConnection connection)
             {
@@ -350,13 +353,25 @@ namespace AndroidUsbSerialDriver.Driver
                 // TODO databit, stopbit and paraty set not implemented
             }
 
-            public override bool GetCD() { return false; }
+            public override bool GetCD()
+            {
+                return false;
+            }
 
-            public override bool GetCTS() { return false; }
+            public override bool GetCTS()
+            {
+                return false;
+            }
 
-            public override bool GetDSR() { return false; }
+            public override bool GetDSR()
+            {
+                return false;
+            }
 
-            public override bool GetDTR() { return dtr; }
+            public override bool GetDTR()
+            {
+                return dtr;
+            }
 
             public override void SetDTR(bool value)
             {
@@ -364,9 +379,15 @@ namespace AndroidUsbSerialDriver.Driver
                 WriteHandshakeByte();
             }
 
-            public override bool GetRI() { return false; }
+            public override bool GetRI()
+            {
+                return false;
+            }
 
-            public override bool GetRTS() { return rts; }
+            public override bool GetRTS()
+            {
+                return rts;
+            }
 
             public override void SetRTS(bool value)
             {

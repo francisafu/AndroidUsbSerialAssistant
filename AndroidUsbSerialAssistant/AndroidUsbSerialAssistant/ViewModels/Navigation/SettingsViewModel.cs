@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AndroidUsbSerialAssistant.Database;
+using AndroidUsbSerialAssistant.Models;
 using AndroidUsbSerialAssistant.Resx;
 using AndroidUsbSerialAssistant.Services;
 using Xamarin.Forms;
@@ -11,7 +12,10 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
     {
         #region Constructor
 
-        public SettingsViewModel() { InitialSettings(); }
+        public SettingsViewModel()
+        {
+            InitialSettings();
+        }
 
         #endregion
 
@@ -58,13 +62,13 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         private static readonly SqliteSettingsStore SETTINGS_STORE =
             new SqliteSettingsStore(App.Database);
 
-        private Models.Settings _currentSettings;
+        private Settings _currentSettings;
 
         #endregion
 
         #region Property
 
-        public Models.Settings CurrentSettings
+        public Settings CurrentSettings
         {
             get => _currentSettings;
             set => Set(ref _currentSettings, value);
@@ -72,10 +76,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
 
         public Command SaveSettingsCommand =>
             saveSettingsCommand
-            ?? (saveSettingsCommand = new Command(async () =>
-            {
-                await SaveSettings();
-            }));
+            ?? (saveSettingsCommand = new Command(async () => { await SaveSettings(); }));
 
         #endregion
     }

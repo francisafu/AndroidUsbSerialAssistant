@@ -48,11 +48,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         ///     Gets or sets a collection of values to be displayed in the Navigation list page.
         /// </summary>
         [DataMember(Name = "navigationList")]
-        public ObservableCollection<NavigationModel> NavigationList
-        {
-            get;
-            set;
-        }
+        public ObservableCollection<NavigationModel> NavigationList { get; set; }
 
         #endregion
     }

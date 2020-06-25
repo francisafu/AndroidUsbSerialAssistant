@@ -155,7 +155,10 @@ namespace AndroidUsbSerialDriver.Driver
                 Driver = driver;
             }
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             /**
              * Filter FTDI status bytes from buffer
@@ -557,19 +560,39 @@ namespace AndroidUsbSerialDriver.Driver
                 return new[] {bestBaud, index, value};
             }
 
-            public override bool GetCD() { return false; }
+            public override bool GetCD()
+            {
+                return false;
+            }
 
-            public override bool GetCTS() { return false; }
+            public override bool GetCTS()
+            {
+                return false;
+            }
 
-            public override bool GetDSR() { return false; }
+            public override bool GetDSR()
+            {
+                return false;
+            }
 
-            public override bool GetDTR() { return false; }
+            public override bool GetDTR()
+            {
+                return false;
+            }
 
-            public override void SetDTR(bool value) { }
+            public override void SetDTR(bool value)
+            {
+            }
 
-            public override bool GetRI() { return false; }
+            public override bool GetRI()
+            {
+                return false;
+            }
 
-            public override bool GetRTS() { return rts; }
+            public override bool GetRTS()
+            {
+                return rts;
+            }
 
             public override void SetRTS(bool value)
             {

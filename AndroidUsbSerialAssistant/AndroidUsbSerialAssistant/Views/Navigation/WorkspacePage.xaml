@@ -52,8 +52,7 @@
                        LineHeight="{OnPlatform Android=1.5,
                                             Default=-1}"
                        TextColor="{DynamicResource Gray-900}"
-                       VerticalOptions="Center"
-                        />
+                       VerticalOptions="Center" />
 
                 <!-- Receiving Functions -->
                 <Label Grid.Row="1"

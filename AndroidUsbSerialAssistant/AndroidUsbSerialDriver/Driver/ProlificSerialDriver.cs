@@ -108,7 +108,10 @@ namespace AndroidUsbSerialDriver.Driver
 
             private string TAG => (Driver as ProlificSerialDriver)?.TAG;
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             private byte[] InControlTransfer(int requestType,
                 int request,
@@ -169,7 +172,10 @@ namespace AndroidUsbSerialDriver.Driver
                     data);
             }
 
-            private void ResetDevice() { PurgeHwBuffers(true, true); }
+            private void ResetDevice()
+            {
+                PurgeHwBuffers(true, true);
+            }
 
             private void CtrlOut(int request, int value, int index, byte[] data)
             {

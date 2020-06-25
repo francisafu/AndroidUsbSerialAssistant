@@ -13,6 +13,9 @@ namespace AndroidUsbSerialAssistant.Views.Records
         /// <summary>
         ///     Initializes a new instance of the <see cref="RecordsPage" /> class.
         /// </summary>
-        public RecordsPage() { InitializeComponent(); }
+        public RecordsPage()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Android.App;
 using Android.Content;
 using Android.Hardware.Usb;
 using AndroidUsbSerialAssistant.Resx;

@@ -39,18 +39,24 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         ///     Invoked when download quality tapped.
         /// </summary>
         /// <param name="obj">The Object.</param>
-        private void DownloadQualityTapped(object obj) { }
+        private void DownloadQualityTapped(object obj)
+        {
+        }
 
         /// <summary>
         ///     Invoked when Show hidden files tapped.
         /// </summary>
         /// <param name="obj">The Object.</param>
-        private void ShowHiddenFilesTapped(object obj) { }
+        private void ShowHiddenFilesTapped(object obj)
+        {
+        }
 
         /// <summary>
         ///     Invoked when Privacy policy tapped.
         /// </summary>
         /// <param name="obj">The Object.</param>
-        private void PrivacyPolicyTapped(object obj) { }
+        private void PrivacyPolicyTapped(object obj)
+        {
+        }
     }
 }

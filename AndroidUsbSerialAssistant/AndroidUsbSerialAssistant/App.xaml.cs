@@ -1,4 +1,3 @@
-using Android.App;
 using Android.Content;
 using Android.Hardware.Usb;
 using AndroidUsbSerialAssistant.Database;
@@ -8,9 +7,9 @@ using AndroidUsbSerialAssistant.Services;
 using AndroidUsbSerialAssistant.Views.Navigation;
 using AndroidUsbSerialDriver.Driver.SettingsEnum;
 using AndroidUsbSerialDriver.Extensions;
+using Syncfusion.Licensing;
 using Xamarin.Forms;
 using Application = Android.App.Application;
-
 
 namespace AndroidUsbSerialAssistant
 {
@@ -30,7 +29,7 @@ namespace AndroidUsbSerialAssistant
             // Comment out this line if you don't have one
             // Or you can claim a community license from here:
             // https://www.syncfusion.com/products/communitylicense
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+            SyncfusionLicenseProvider.RegisterLicense(
                 LicenseKey.LICENSE_KEY);
 
             InitializeComponent();

@@ -11,7 +11,7 @@ using Android.App;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SerialAssistant")]
-[assembly: AssemblyCopyright("Copyright FrancisFu©  2020")]
+[assembly: AssemblyCopyright("Copyright FrancisFu ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -22,14 +22,14 @@ using Android.App;
 //      Minor Version 
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.5.2.0")]
+[assembly: AssemblyFileVersion("1.5.2.0")]
 
 // Add some common permissions, these can be removed if not needed
 [assembly: UsesPermission(Manifest.Permission.Internet)]
 [assembly: UsesPermission(Manifest.Permission.WriteExternalStorage)]
-[assembly: UsesPermission(Android.Manifest.Permission.AccessCoarseLocation)]
-[assembly: UsesPermission(Android.Manifest.Permission.AccessFineLocation)]
+[assembly: UsesPermission(Manifest.Permission.AccessCoarseLocation)]
+[assembly: UsesPermission(Manifest.Permission.AccessFineLocation)]
 [assembly: UsesFeature("android.hardware.location", Required = false)]
 [assembly: UsesFeature("android.hardware.location.gps", Required = false)]
 [assembly: UsesFeature("android.hardware.location.network", Required = false)]

@@ -145,7 +145,10 @@ namespace AndroidUsbSerialDriver.Extensions
             disposed = true;
         }
 
-        ~SerialInputOutputManager() { Dispose(false); }
+        ~SerialInputOutputManager()
+        {
+            Dispose(false);
+        }
 
         #region IDisposable implementation
 

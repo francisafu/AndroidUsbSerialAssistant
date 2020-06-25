@@ -13,6 +13,9 @@ namespace AndroidUsbSerialAssistant.Views.Records
         /// <summary>
         ///     Initializes a new instance of the <see cref="Styles" /> class.
         /// </summary>
-        public Styles() { InitializeComponent(); }
+        public Styles()
+        {
+            InitializeComponent();
+        }
     }
 }

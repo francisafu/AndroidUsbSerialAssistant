@@ -10,6 +10,9 @@ namespace AndroidUsbSerialAssistant.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Styles
     {
-        public Styles() { InitializeComponent(); }
+        public Styles()
+        {
+            InitializeComponent();
+        }
     }
 }

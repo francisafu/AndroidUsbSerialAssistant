@@ -15,7 +15,6 @@ namespace AndroidUsbSerialDriver.Util
         {
             // return Encoding.UTF8.GetString(byteData);
             return Encoding.GetEncoding("gb2312").GetString(byteData);
-
         }
 
         public static byte[] HexStringToByteArray(string hexData)
@@ -30,7 +29,6 @@ namespace AndroidUsbSerialDriver.Util
         {
             // return Encoding.UTF8.GetBytes(stringData);
             return Encoding.GetEncoding("gb2312").GetBytes(stringData);
-
         }
     }
 }

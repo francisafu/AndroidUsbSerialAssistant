@@ -105,7 +105,10 @@ namespace AndroidUsbSerialDriver.Driver
             }
 
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             public override void Open(UsbDeviceConnection connection)
             {
@@ -489,7 +492,10 @@ namespace AndroidUsbSerialDriver.Driver
                 return false; // TODO
             }
 
-            public override bool GetDTR() { return mDtr; }
+            public override bool GetDTR()
+            {
+                return mDtr;
+            }
 
             public override void SetDTR(bool value)
             {
@@ -502,7 +508,10 @@ namespace AndroidUsbSerialDriver.Driver
                 return false; // TODO
             }
 
-            public override bool GetRTS() { return mRts; }
+            public override bool GetRTS()
+            {
+                return mRts;
+            }
 
             public override void SetRTS(bool value)
             {

@@ -50,7 +50,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            
+
             <ListView:SfListView x:Name="RecordsList" AutoFitMode="Height" IsScrollBarVisible="False" Padding="8"
                                  ItemSpacing="8" BackgroundColor="Transparent"
                                  SelectionGesture="Tap" SelectionBackgroundColor="Transparent" SelectionMode="Single"

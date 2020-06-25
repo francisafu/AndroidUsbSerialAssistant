@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ViewCell
     x:Class="AndroidUsbSerialAssistant.Views.Chat.IncomingTextTemplate"
     xmlns="http://xamarin.com/schemas/2014/forms"

@@ -4,14 +4,14 @@ using Xamarin.Forms.Xaml;
 namespace AndroidUsbSerialAssistant.Views.Chat
 {
     /// <summary>
-    /// Which is used for incoming text template
+    ///     Which is used for incoming text template
     /// </summary>
     [Preserve(AllMembers = true)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IncomingTextTemplate
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IncomingTextTemplate" /> class.
+        ///     Initializes a new instance of the <see cref="IncomingTextTemplate" /> class.
         /// </summary>
         public IncomingTextTemplate()
         {
