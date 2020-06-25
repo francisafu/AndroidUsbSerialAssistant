@@ -10,7 +10,9 @@ namespace AndroidUsbSerialDriver.Extensions
         private static readonly IParcelableCreator CREATOR =
             new ParcelableCreator();
 
-        public UsbSerialPortInfo() { }
+        public UsbSerialPortInfo()
+        {
+        }
 
         public UsbSerialPortInfo(UsbSerialPort port)
         {
@@ -34,7 +36,10 @@ namespace AndroidUsbSerialDriver.Extensions
         public int PortNumber { get; set; }
 
         [ExportField("CREATOR")]
-        public static IParcelableCreator GetCreator() { return CREATOR; }
+        public static IParcelableCreator GetCreator()
+        {
+            return CREATOR;
+        }
 
         #region ParcelableCreator implementation
 
@@ -59,7 +64,10 @@ namespace AndroidUsbSerialDriver.Extensions
 
         #region IParcelable implementation
 
-        public int DescribeContents() { return 0; }
+        public int DescribeContents()
+        {
+            return 0;
+        }
 
         public void WriteToParcel(Parcel dest, ParcelableWriteFlags flags)
         {

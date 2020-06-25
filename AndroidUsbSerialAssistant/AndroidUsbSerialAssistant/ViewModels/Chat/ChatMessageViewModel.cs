@@ -63,7 +63,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         private static readonly SqliteSettingsStore SETTINGS_STORE =
             new SqliteSettingsStore(App.Database);
 
-        private ILocationService
+        private readonly ILocationService
             _locationService = new AndroidLocationService();
 
         private string _newMessage;
@@ -155,17 +155,14 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
 
         #region Private Properties
 
-        private Models.Settings CurrentSettings { get; set; }
+        private Settings CurrentSettings { get; set; }
 
         private Command StartCommand =>
             startCommand ?? (startCommand = new Command(StartReceiving));
 
         private Command PauseCommand =>
             pauseCommand
-            ?? (pauseCommand = new Command(async () =>
-            {
-                await PauseReceiving();
-            }));
+            ?? (pauseCommand = new Command(async () => { await PauseReceiving(); }));
 
         private Command StartAutoSendCommand =>
             startAutoSendCommand
@@ -212,10 +209,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             };
             _serialIoManager.DataReceived += (sender, e) =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    UpdateReceivedData(e.Data);
-                });
+                Device.BeginInvokeOnMainThread(() => { UpdateReceivedData(e.Data); });
             };
             _serialIoManager.ErrorReceived += (sender, e) =>
             {
@@ -326,17 +320,14 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
 
         private async void GetCurrentLocation()
         {
+            // TODO: Syncfusion Busy Indicator
             var location = await _locationService.GetLocation();
             if (location != null)
-            {
                 NewMessage =
-                    $"{AppResources.Longitude}: {location.Longitude}, {AppResources.Latitude}: {location.Latitude}, {AppResources.Altitude}: {location.Altitude}";
-            }
+                    $"{AppResources.Longitude}: {location.Longitude:N6}, {AppResources.Latitude}: {location.Latitude:N6}, {AppResources.Altitude}: {location.Altitude:N2}";
             else
-            {
                 ToastService.ToastShortMessage(AppResources
                     .Get_Location_Failed);
-            }
         }
 
         #endregion

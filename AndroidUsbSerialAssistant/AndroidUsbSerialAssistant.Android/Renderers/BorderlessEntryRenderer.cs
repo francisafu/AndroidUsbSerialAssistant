@@ -12,7 +12,9 @@ namespace AndroidUsbSerialAssistant.Droid
 {
     public class BorderlessEntryRenderer : EntryRenderer
     {
-        public BorderlessEntryRenderer() : base(Application.Context) { }
+        public BorderlessEntryRenderer() : base(Application.Context)
+        {
+        }
 
         protected override void OnElementChanged(
             ElementChangedEventArgs<Entry> e)

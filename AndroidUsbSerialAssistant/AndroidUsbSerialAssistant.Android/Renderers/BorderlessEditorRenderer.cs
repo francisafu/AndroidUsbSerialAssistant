@@ -1,14 +1,17 @@
 using Android.Graphics.Drawables;
+using AndroidUsbSerialAssistant.Controls;
+using AndroidUsbSerialAssistant.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Application = Android.App.Application;
+using Color = Android.Graphics.Color;
 
-[assembly: ExportRenderer(typeof(AndroidUsbSerialAssistant.Controls.BorderlessEditor), typeof(AndroidUsbSerialAssistant.Droid.BorderlessEditorRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEditor), typeof(BorderlessEditorRenderer))]
 
 namespace AndroidUsbSerialAssistant.Droid
 {
     /// <summary>
-    /// Implementation of Borderless editor control.
+    ///     Implementation of Borderless editor control.
     /// </summary>
     public class BorderlessEditorRenderer : EditorRenderer
     {
@@ -21,18 +24,16 @@ namespace AndroidUsbSerialAssistant.Droid
         #endregion
 
         #region Methods
+
         /// <summary>
-        /// Used to set the transparent color for editor control background property.
+        ///     Used to set the transparent color for editor control background property.
         /// </summary>
         /// <param name="e">The editor</param>
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
             base.OnElementChanged(e);
 
-            if (this.Control != null)
-            {
-                this.Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
-            }
+            if (Control != null) Control.Background = new ColorDrawable(Color.Transparent);
         }
 
         #endregion

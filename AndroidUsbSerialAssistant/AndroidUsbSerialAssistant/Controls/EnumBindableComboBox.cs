@@ -4,8 +4,7 @@ using Syncfusion.DataSource.Extensions;
 using Syncfusion.XForms.ComboBox;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
-using SelectionChangedEventArgs =
-    Syncfusion.XForms.ComboBox.SelectionChangedEventArgs;
+using SelectionChangedEventArgs = Syncfusion.XForms.ComboBox.SelectionChangedEventArgs;
 
 namespace AndroidUsbSerialAssistant.Controls
 {

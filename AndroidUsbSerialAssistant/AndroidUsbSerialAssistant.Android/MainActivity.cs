@@ -7,7 +7,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Platform = Xamarin.Essentials.Platform;
 
-
 namespace AndroidUsbSerialAssistant.Droid
 {
     [Activity(Label = "@string/app_name",

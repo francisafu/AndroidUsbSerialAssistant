@@ -97,7 +97,10 @@ namespace AndroidUsbSerialDriver.Driver
 
             private string TAG => (Driver as Cp21xxSerialDriver)?.TAG;
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             private int SetConfigSingle(int request, int value)
             {
@@ -326,21 +329,43 @@ namespace AndroidUsbSerialDriver.Driver
                     configDataBits);
             }
 
-            public override bool GetCD() { return false; }
+            public override bool GetCD()
+            {
+                return false;
+            }
 
-            public override bool GetCTS() { return false; }
+            public override bool GetCTS()
+            {
+                return false;
+            }
 
-            public override bool GetDSR() { return false; }
+            public override bool GetDSR()
+            {
+                return false;
+            }
 
-            public override bool GetDTR() { return true; }
+            public override bool GetDTR()
+            {
+                return true;
+            }
 
-            public override void SetDTR(bool value) { }
+            public override void SetDTR(bool value)
+            {
+            }
 
-            public override bool GetRI() { return false; }
+            public override bool GetRI()
+            {
+                return false;
+            }
 
-            public override bool GetRTS() { return true; }
+            public override bool GetRTS()
+            {
+                return true;
+            }
 
-            public override void SetRTS(bool value) { }
+            public override void SetRTS(bool value)
+            {
+            }
 
             public override bool PurgeHwBuffers(bool purgeReadBuffers,
                 bool purgeWriteBuffers)

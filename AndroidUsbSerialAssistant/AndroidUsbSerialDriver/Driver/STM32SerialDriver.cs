@@ -56,7 +56,10 @@ namespace AndroidUsbSerialDriver.Driver
                 ENABLE_ASYNC_READS = true;
             }
 
-            public override IUsbSerialDriver GetDriver() { return Driver; }
+            public override IUsbSerialDriver GetDriver()
+            {
+                return Driver;
+            }
 
             private int
                 SendAcmControlMessage(int request, int value, byte[] buf)
@@ -290,13 +293,25 @@ namespace AndroidUsbSerialDriver.Driver
                 SendAcmControlMessage(SET_LINE_CODING, 0, msg);
             }
 
-            public override bool GetCD() { return false; } //TODO
+            public override bool GetCD()
+            {
+                return false;
+            } //TODO
 
-            public override bool GetCTS() { return false; } //TODO
+            public override bool GetCTS()
+            {
+                return false;
+            } //TODO
 
-            public override bool GetDSR() { return false; } // TODO
+            public override bool GetDSR()
+            {
+                return false;
+            } // TODO
 
-            public override bool GetDTR() { return mDtr; }
+            public override bool GetDTR()
+            {
+                return mDtr;
+            }
 
             public override void SetDTR(bool value)
             {
@@ -304,9 +319,15 @@ namespace AndroidUsbSerialDriver.Driver
                 SetDtrRts();
             }
 
-            public override bool GetRI() { return false; } //TODO
+            public override bool GetRI()
+            {
+                return false;
+            } //TODO
 
-            public override bool GetRTS() { return mRts; } //TODO
+            public override bool GetRTS()
+            {
+                return mRts;
+            } //TODO
 
             public override void SetRTS(bool value)
             {

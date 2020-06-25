@@ -8,6 +8,9 @@ namespace AndroidUsbSerialAssistant.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecordsPage : ContentPage
     {
-        public RecordsPage() { InitializeComponent(); }
+        public RecordsPage()
+        {
+            InitializeComponent();
+        }
     }
 }

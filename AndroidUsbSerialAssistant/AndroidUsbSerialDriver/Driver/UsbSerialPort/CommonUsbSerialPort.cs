@@ -51,15 +51,24 @@ namespace AndroidUsbSerialDriver.Driver.UsbSerialPort
          * 
          * @return the device
          */
-        public UsbDevice GetDevice() { return mDevice; }
+        public UsbDevice GetDevice()
+        {
+            return mDevice;
+        }
 
-        public override int GetPortNumber() { return mPortNumber; }
+        public override int GetPortNumber()
+        {
+            return mPortNumber;
+        }
 
         /**
          * Returns the device serial number
          * @return serial number
          */
-        public override string GetSerial() { return mConnection.Serial; }
+        public override string GetSerial()
+        {
+            return mConnection.Serial;
+        }
 
         /**
          * Sets the size of the internal buffer used to exchange data with the USB

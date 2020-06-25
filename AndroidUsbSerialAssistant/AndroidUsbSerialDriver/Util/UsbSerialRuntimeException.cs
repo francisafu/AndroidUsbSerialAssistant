@@ -6,7 +6,9 @@ namespace AndroidUsbSerialDriver.Util
 {
     public class UsbSerialRuntimeException : RuntimeException
     {
-        public UsbSerialRuntimeException() { }
+        public UsbSerialRuntimeException()
+        {
+        }
 
         public UsbSerialRuntimeException(Throwable throwable) : base(throwable)
         {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using AndroidUsbSerialAssistant.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -24,13 +23,11 @@ namespace AndroidUsbSerialAssistant.ViewModels.Records
             {
                 new Models.Records
                 {
-                    Name = "John Doe",
-                    
+                    Name = "John Doe"
                 },
                 new Models.Records
                 {
-                    Name = "John Doe",
-                    
+                    Name = "John Doe"
                 }
             };
         }

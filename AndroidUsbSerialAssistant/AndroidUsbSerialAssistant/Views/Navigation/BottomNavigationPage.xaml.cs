@@ -7,6 +7,9 @@ namespace AndroidUsbSerialAssistant.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BottomNavigationPage
     {
-        public BottomNavigationPage() { InitializeComponent(); }
+        public BottomNavigationPage()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AndroidUsbSerialAssistant.Database;
+using AndroidUsbSerialAssistant.Models;
 using AndroidUsbSerialAssistant.Resx;
 using AndroidUsbSerialAssistant.Services;
 using AndroidUsbSerialDriver.Driver.UsbSerialPort;
@@ -67,7 +68,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
 
         #region Properties
 
-        private Models.Settings CurrentSettings { get; set; }
+        private Settings CurrentSettings { get; set; }
 
         public string ReceivedOutPut => RECEIVED_OUT_PUT.ToString();
 
@@ -109,10 +110,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
 
         private Command PauseCommand =>
             pauseCommand
-            ?? (pauseCommand = new Command(async () =>
-            {
-                await PauseReceiving();
-            }));
+            ?? (pauseCommand = new Command(async () => { await PauseReceiving(); }));
 
         public Command ClearReceivedCommand =>
             clearReceivedCommand
@@ -169,10 +167,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
             };
             _serialIoManager.DataReceived += (sender, e) =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    UpdateReceivedData(e.Data);
-                });
+                Device.BeginInvokeOnMainThread(() => { UpdateReceivedData(e.Data); });
             };
             _serialIoManager.ErrorReceived += (sender, e) =>
             {

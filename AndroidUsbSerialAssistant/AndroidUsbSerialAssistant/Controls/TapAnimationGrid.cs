@@ -16,7 +16,10 @@ namespace AndroidUsbSerialAssistant.Controls
         /// <summary>
         ///     Initializes a new instance of the <see cref="TapAnimationGrid" /> class.
         /// </summary>
-        public TapAnimationGrid() { Initialize(); }
+        public TapAnimationGrid()
+        {
+            Initialize();
+        }
 
         #endregion
 

@@ -14,6 +14,9 @@ namespace AndroidUsbSerialAssistant.Views.Chat
         /// <summary>
         ///     Initializes a new instance of the <see cref="ChatMessagePage" /> class.
         /// </summary>
-        public ChatMessagePage() { InitializeComponent(); }
+        public ChatMessagePage()
+        {
+            InitializeComponent();
+        }
     }
 }

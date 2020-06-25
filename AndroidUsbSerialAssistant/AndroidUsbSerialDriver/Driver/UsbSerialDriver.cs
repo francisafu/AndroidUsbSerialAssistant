@@ -12,7 +12,10 @@ namespace AndroidUsbSerialDriver.Driver
 
         public List<UsbSerialPort.UsbSerialPort> Ports => GetPorts();
 
-        public UsbDevice GetDevice() { return mDevice; }
+        public UsbDevice GetDevice()
+        {
+            return mDevice;
+        }
 
         public List<UsbSerialPort.UsbSerialPort> GetPorts()
         {
