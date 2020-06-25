@@ -117,14 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Auto" xml:space="preserve">
-    <value>自动发送</value>
+  <data name="Altitude" xml:space="preserve">
+    <value>海拔</value>
   </data>
   <data name="Baud Rate" xml:space="preserve">
     <value>波特率</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
+  </data>
   <data name="Clear" xml:space="preserve">
-    <value>清除</value>
+    <value>清除记录</value>
   </data>
   <data name="Data Bits" xml:space="preserve">
     <value>数据位</value>
@@ -132,8 +135,17 @@
   <data name="Device Detached" xml:space="preserve">
     <value>设备已移除</value>
   </data>
+  <data name="Favour" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="FavourMessage" xml:space="preserve">
+    <value>消息收藏</value>
+  </data>
   <data name="Frequency" xml:space="preserve">
     <value>频    率</value>
+  </data>
+  <data name="Get Location Failed" xml:space="preserve">
+    <value>获取位置失败！</value>
   </data>
   <data name="Hex" xml:space="preserve">
     <value>Hex</value>
@@ -141,8 +153,11 @@
   <data name="Known Device" xml:space="preserve">
     <value>设备已连接并可以使用</value>
   </data>
-  <data name="Manual" xml:space="preserve">
-    <value>手动发送</value>
+  <data name="Latitude" xml:space="preserve">
+    <value>纬度</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>经度</value>
   </data>
   <data name="No Device" xml:space="preserve">
     <value>未找到设备</value>
@@ -177,15 +192,6 @@
   <data name="Received Error" xml:space="preserve">
     <value>数据接收失败</value>
   </data>
-  <data name="Received Records" xml:space="preserve">
-    <value>接收记录</value>
-  </data>
-  <data name="Receiving Area" xml:space="preserve">
-    <value>接收区</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>记录</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>保存</value>
   </data>
@@ -195,17 +201,11 @@
   <data name="Save Success" xml:space="preserve">
     <value>存储成功</value>
   </data>
-  <data name="Sending Area" xml:space="preserve">
-    <value>发送区</value>
+  <data name="Send Error" xml:space="preserve">
+    <value>发送失败</value>
   </data>
   <data name="Sent" xml:space="preserve">
     <value>发送</value>
-  </data>
-  <data name="Sent Data Area" xml:space="preserve">
-    <value>发送数据区</value>
-  </data>
-  <data name="Sent Records" xml:space="preserve">
-    <value>发送记录</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
@@ -216,11 +216,8 @@
   <data name="Start Auto Send" xml:space="preserve">
     <value>开始自动发送</value>
   </data>
-  <data name="Stop" xml:space="preserve">
-    <value>停止发送</value>
-  </data>
   <data name="Stop Auto Send" xml:space="preserve">
-    <value>终止自动发送</value>
+    <value>结束自动发送</value>
   </data>
   <data name="Stop Bits" xml:space="preserve">
     <value>停止位</value>
@@ -230,9 +227,6 @@
   </data>
   <data name="Unknown Device" xml:space="preserve">
     <value>未识别的设备已连接</value>
-  </data>
-  <data name="Workspace" xml:space="preserve">
-    <value>工作区</value>
   </data>
   <data name="Write Failed" xml:space="preserve">
     <value>写入数据失败！</value>

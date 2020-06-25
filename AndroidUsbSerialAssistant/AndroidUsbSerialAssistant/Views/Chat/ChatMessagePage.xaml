@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    x:Class="AndroidUsbSerialAssistant.Views.Chat.ChatMessagePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:AndroidUsbSerialAssistant.Controls"
+    xmlns:converter="clr-namespace:AndroidUsbSerialAssistant.Converters"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:local="clr-namespace:AndroidUsbSerialAssistant.Views.Chat"
+    xmlns:viewModel="clr-namespace:AndroidUsbSerialAssistant.ViewModels.Chat"
+    xmlns:behaviors="clr-namespace:AndroidUsbSerialAssistant.Behaviors;assembly=AndroidUsbSerialAssistant"
+    BackgroundImage="ChatMessageBackground.png"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            <local:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewModel:ChatMessageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <Grid>
+            <ScrollView>
+
+                <!--  List view to show the recent chat history  -->
+                <listView:SfListView
+                    x:Name="ListView"
+                    AutoFitMode="Height"
+                    BackgroundColor="{StaticResource Transparent}"
+                    FocusBorderThickness="0"
+                    IsStickyFooter="True"
+                    IsStickyHeader="True"
+                    ItemTemplate="{StaticResource MessageDataTemplateSelector}"
+                    ItemsSource="{Binding ChatMessageCollection}"
+                    RowSpacing="12"
+                    SelectionMode="None"
+                    VerticalOptions="Fill">
+
+                    <listView:SfListView.Behaviors>
+                        <behaviors:ChatMessageListViewBehavior />
+                    </listView:SfListView.Behaviors>
+
+                    <!--  Navigation bar  -->
+                    <listView:SfListView.HeaderTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Padding="5"
+                                BackgroundColor="{DynamicResource Gray-White}"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                Spacing="0"
+                                VerticalOptions="Fill">
+
+                                <!--  Device Name  -->
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                                    FontSize="16"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding CurrentDeviceName}" />
+
+                                <!--  Start Receiving Button  -->
+
+                                <buttons:SfButton
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource SfButtonStyle}"
+                                    Margin="0,0,10,0"
+                                    WidthRequest="80"
+                                    HeightRequest="32"
+                                    Command="{Binding PortCommand}"
+                                    Text="{Binding PortStatus}" />
+
+                                <!--  Menu Button  -->
+                                <buttons:SfButton
+                                    Command="{Binding MenuCommand}"
+                                    Style="{StaticResource NavigationBarButtonStyle}"
+                                    Text="{StaticResource Menu}" />
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </listView:SfListView.HeaderTemplate>
+
+                    <!--  New Text Entry  -->
+                    <listView:SfListView.FooterTemplate>
+                        <DataTemplate>
+                            <Grid Padding="16,5,16,5" ColumnSpacing="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  Rounded Border  -->
+                                <border:SfBorder Padding="5,0" Style="{DynamicResource SfBorderStyle}">
+
+                                    <Grid ColumnSpacing="0">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!--  Extendable Editor  -->
+                                        <controls:BorderlessEditor
+                                            Style="{StaticResource ChatMessageEditorStyle}"
+                                            Text="{Binding NewMessage}" />
+
+                                        <!--  GPS Button  -->
+                                        <buttons:SfButton
+                                            Grid.Column="1"
+                                            CornerRadius="20"
+                                            Command="{Binding GetLocationCommand}"
+                                            Style="{StaticResource NavigationBarButtonStyle}"
+                                            Text="{StaticResource Gps}"
+                                            VerticalOptions="End" />
+
+                                        <!--  Auto Send Button  -->
+                                        <buttons:SfButton
+                                            Grid.Column="2"
+                                            CornerRadius="20"
+                                            BackgroundColor="{Binding IsAutoSending, Converter={StaticResource ColorConverter}, ConverterParameter=9}"
+                                            Command="{Binding AutoSendCommand}"
+                                            Style="{StaticResource NavigationBarButtonStyle}"
+                                            Text="{StaticResource AutoSend}"
+                                            VerticalOptions="End" />
+
+                                    </Grid>
+                                </border:SfBorder>
+
+                                <!--  Send Button  -->
+                                <buttons:SfButton
+                                    Grid.Column="1"
+                                    BackgroundColor="{DynamicResource PrimaryColor}"
+                                    Command="{Binding ManualSendCommand}"
+                                    CornerRadius="20"
+                                    HeightRequest="40"
+                                    HorizontalOptions="End"
+                                    Style="{StaticResource NavigationBarButtonStyle}"
+                                    VerticalOptions="End"
+                                    WidthRequest="40">
+                                    <buttons:SfButton.Content>
+                                        <Label
+                                            Margin="0,2,2,0"
+                                            FontFamily="{StaticResource FontIcons}"
+                                            FontSize="18"
+                                            HorizontalOptions="Center"
+                                            Text="{StaticResource Send}"
+                                            TextColor="{DynamicResource Gray-White}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </buttons:SfButton.Content>
+                                </buttons:SfButton>
+
+                            </Grid>
+                        </DataTemplate>
+                    </listView:SfListView.FooterTemplate>
+                </listView:SfListView>
+
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

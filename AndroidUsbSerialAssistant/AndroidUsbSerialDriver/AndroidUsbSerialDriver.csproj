@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.54" />
+    <PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.1.0.54" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.54" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Java.Interop">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\Java.Interop.dll</HintPath>
     </Reference>

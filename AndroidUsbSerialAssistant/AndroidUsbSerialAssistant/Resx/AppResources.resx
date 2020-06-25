@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Auto" xml:space="preserve">
-    <value>Auto</value>
+  <data name="Altitude" xml:space="preserve">
+    <value>Altitude</value>
   </data>
   <data name="Baud Rate" xml:space="preserve">
     <value>Baud Rate</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
@@ -132,8 +135,17 @@
   <data name="Device Detached" xml:space="preserve">
     <value>Device has detached</value>
   </data>
+  <data name="Favour" xml:space="preserve">
+    <value>Favour</value>
+  </data>
+  <data name="FavourMessage" xml:space="preserve">
+    <value>Favour Message</value>
+  </data>
   <data name="Frequency" xml:space="preserve">
     <value>Frequency</value>
+  </data>
+  <data name="Get Location Failed" xml:space="preserve">
+    <value>Get location failed</value>
   </data>
   <data name="Hex" xml:space="preserve">
     <value>Hex</value>
@@ -141,8 +153,11 @@
   <data name="Known Device" xml:space="preserve">
     <value>Device has attached and ready to use</value>
   </data>
-  <data name="Manual" xml:space="preserve">
-    <value>Manual</value>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
   </data>
   <data name="No Device" xml:space="preserve">
     <value>Device not found</value>
@@ -177,15 +192,6 @@
   <data name="Received Error" xml:space="preserve">
     <value>Data received error</value>
   </data>
-  <data name="Received Records" xml:space="preserve">
-    <value>Received Records</value>
-  </data>
-  <data name="Receiving Area" xml:space="preserve">
-    <value>Receiving Area</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>Records</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -195,17 +201,11 @@
   <data name="Save Success" xml:space="preserve">
     <value>Settings saved</value>
   </data>
-  <data name="Sending Area" xml:space="preserve">
-    <value>Sending Area</value>
+  <data name="Send Error" xml:space="preserve">
+    <value>Send Failed</value>
   </data>
   <data name="Sent" xml:space="preserve">
     <value>Sent</value>
-  </data>
-  <data name="Sent Data Area" xml:space="preserve">
-    <value>Sent Data Area</value>
-  </data>
-  <data name="Sent Records" xml:space="preserve">
-    <value>Sent Records</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -214,13 +214,10 @@
     <value>Start</value>
   </data>
   <data name="Start Auto Send" xml:space="preserve">
-    <value>Auto send started</value>
-  </data>
-  <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>Auto Send Started</value>
   </data>
   <data name="Stop Auto Send" xml:space="preserve">
-    <value>Auto send stopped</value>
+    <value>Auto Send Stopped</value>
   </data>
   <data name="Stop Bits" xml:space="preserve">
     <value>Stop Bits</value>
@@ -230,9 +227,6 @@
   </data>
   <data name="Unknown Device" xml:space="preserve">
     <value>Unknown device has attached</value>
-  </data>
-  <data name="Workspace" xml:space="preserve">
-    <value>Workspace</value>
   </data>
   <data name="Write Failed" xml:space="preserve">
     <value>Write data failed!</value>

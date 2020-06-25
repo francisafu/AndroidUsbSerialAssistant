@@ -1,5 +1,6 @@
-﻿using Android.App;
-using Android.Widget;
+﻿using Android.Widget;
+using Xamarin.Forms;
+using Application = Android.App.Application;
 
 namespace AndroidUsbSerialAssistant.Services
 {
@@ -7,14 +8,24 @@ namespace AndroidUsbSerialAssistant.Services
     {
         public static void ToastShortMessage(string message)
         {
-            Toast.MakeText(Application.Context, message, ToastLength.Short)
-                .Show();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Toast.MakeText(Application.Context,
+                        message,
+                        ToastLength.Short)
+                    .Show();
+            });
         }
 
         public static void ToastLongMessage(string message)
         {
-            Toast.MakeText(Application.Context, message, ToastLength.Long)
-                .Show();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Toast.MakeText(Application.Context,
+                        message,
+                        ToastLength.Long)
+                    .Show();
+            });
         }
     }
 }

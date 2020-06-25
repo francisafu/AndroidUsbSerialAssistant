@@ -1,9 +1,12 @@
-Ôªøusing System;
+using System;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AndroidLocation;
+using AndroidLocation.AndroidLocationService;
 using AndroidUsbSerialAssistant.Database;
+using AndroidUsbSerialAssistant.Models;
 using AndroidUsbSerialAssistant.Resx;
 using AndroidUsbSerialAssistant.Services;
 using AndroidUsbSerialDriver.Driver.UsbSerialPort;
@@ -11,18 +14,16 @@ using AndroidUsbSerialDriver.Extensions;
 using AndroidUsbSerialDriver.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
-using Log = Android.Util.Log;
 
-namespace AndroidUsbSerialAssistant.ViewModels.Navigation
+namespace AndroidUsbSerialAssistant.ViewModels.Chat
 {
-    /// <summary>
-    ///     Workspace view model.
-    /// </summary>
     [Preserve(AllMembers = true)]
     [DataContract]
-    public class WorkspaceViewModel : BaseViewModel
+    public class ChatMessageViewModel : BaseViewModel
     {
-        public WorkspaceViewModel()
+        #region Constructor
+
+        public ChatMessageViewModel()
         {
             InitialSettings();
             MessagingCenter.Subscribe<object>(this,
@@ -35,45 +36,46 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
                     CurrentDeviceName = "";
                     NotifyPropertyChanged(CurrentDeviceName);
                 });
+            ChatMessageCollection = new ObservableCollection<ChatMessage>();
         }
+
+        #endregion
 
         #region Fields
 
         private Command startCommand;
         private Command pauseCommand;
-        private Command clearReceivedCommand;
+        private Command clearCommand;
+        private Command saveCommand;
         private Command startAutoSendCommand;
         private Command stopAutoSendCommand;
         private Command manualSendCommand;
+        private Command getLocationCommand;
 
         private const int UsbWriteDataTimeOut = 200;
         private static UsbSerialPort _port;
         private static SerialInputOutputManager _serialIoManager;
         private CancellationTokenSource _cancellationTokenSource;
         private bool _isAutoSending;
-
-        private static readonly StringBuilder RECEIVED_OUT_PUT =
-            new StringBuilder();
-
         private static int _receivedDataCount;
-
         private static int _sentDataCount;
-
 
         private static readonly SqliteSettingsStore SETTINGS_STORE =
             new SqliteSettingsStore(App.Database);
 
+        private ILocationService
+            _locationService = new AndroidLocationService();
+
+        private string _newMessage;
+
+        private ObservableCollection<ChatMessage> _chatMessageCollection =
+            new ObservableCollection<ChatMessage>();
+
         #endregion
 
-        #region Properties
-
-        private Models.Settings CurrentSettings { get; set; }
-
-        public string ReceivedOutPut => RECEIVED_OUT_PUT.ToString();
+        #region Public Properties
 
         public string CurrentDeviceName { get; private set; }
-
-        public string DataToSend { get; set; }
 
         public bool IsHex { get; set; }
 
@@ -104,6 +106,57 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
             }
         }
 
+        public Command ClearMessagesCommand =>
+            clearCommand ?? (clearCommand = new Command(ClearData));
+
+        public Command ManualSendCommand =>
+            manualSendCommand
+            ?? (manualSendCommand = new Command(ManualSendData));
+
+        public Command AutoSendCommand =>
+            _isAutoSending ? StopAutoSendCommand : StartAutoSendCommand;
+
+        public Command GetLocationCommand =>
+            getLocationCommand
+            ?? (getLocationCommand = new Command(GetCurrentLocation));
+
+
+        public ObservableCollection<ChatMessage> ChatMessageCollection
+        {
+            get => _chatMessageCollection;
+            set
+            {
+                _chatMessageCollection = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string NewMessage
+        {
+            get => _newMessage;
+            set
+            {
+                _newMessage = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public bool IsAutoSending
+        {
+            get => _isAutoSending;
+            set
+            {
+                _isAutoSending = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        private Models.Settings CurrentSettings { get; set; }
+
         private Command StartCommand =>
             startCommand ?? (startCommand = new Command(StartReceiving));
 
@@ -114,27 +167,17 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
                 await PauseReceiving();
             }));
 
-        public Command ClearReceivedCommand =>
-            clearReceivedCommand
-            ?? (clearReceivedCommand = new Command(ClearReceivedData));
-
-        public Command ManualSendCommand =>
-            manualSendCommand ?? (manualSendCommand = new Command(SendData));
-
-        public Command AutoSendCommand =>
-            _isAutoSending ? StopAutoSendCommand : StartAutoSendCommand;
-
-        public Command StartAutoSendCommand =>
+        private Command StartAutoSendCommand =>
             startAutoSendCommand
             ?? (startAutoSendCommand = new Command(AutoSendData));
 
-        public Command StopAutoSendCommand =>
+        private Command StopAutoSendCommand =>
             stopAutoSendCommand
             ?? (stopAutoSendCommand = new Command(StopAutoSend));
 
         #endregion
 
-        #region CommandMethods
+        #region Command Methods
 
         private async void StartReceiving()
         {
@@ -176,11 +219,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
             };
             _serialIoManager.ErrorReceived += (sender, e) =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    ToastService.ToastShortMessage(AppResources
-                        .Received_Error);
-                });
+                ToastService.ToastShortMessage(AppResources.Received_Error);
             };
             ToastService.ToastShortMessage(AppResources.Port_Listening);
 
@@ -224,40 +263,55 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
             }
         }
 
-        private void ClearReceivedData()
+        private void ClearData()
         {
-            RECEIVED_OUT_PUT.Clear();
+            ChatMessageCollection.Clear();
             _receivedDataCount = 0;
-            NotifyPropertyChanged(nameof(ReceivedOutPut));
+            _sentDataCount = 0;
+            NotifyPropertyChanged(nameof(ChatMessageCollection));
             NotifyPropertyChanged(nameof(ReceivedDataCount));
+            NotifyPropertyChanged(nameof(SentDataCount));
         }
 
-        private void SendData()
+        private void ManualSendData()
         {
-            var stringData = DataToSend.Replace(Environment.NewLine, " ");
-            WriteData(IsHex
-                ? FormatConverter.HexStringToByteArray(stringData)
-                : FormatConverter.StringToByteArray(stringData));
+            if (WriteData())
+            {
+                ChatMessageCollection.Add(new ChatMessage
+                {
+                    Message = NewMessage, Time = DateTime.Now
+                });
+                NewMessage = null;
+            }
+            else
+            {
+                ToastService.ToastShortMessage(AppResources.Send_Error);
+            }
         }
 
         private void AutoSendData()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = _cancellationTokenSource.Token;
-            cancellationToken.Register(() => _isAutoSending = false);
-            // () => ToastService.ToastShortMessage(AppResources.Stop_Auto_Send)
-            // ToastService.ToastShortMessage(AppResources.Start_Auto_Send);
-            _isAutoSending = true;
+            cancellationToken.Register(() =>
+                ToastService.ToastShortMessage(AppResources.Stop_Auto_Send));
+            ToastService.ToastShortMessage(AppResources.Start_Auto_Send);
+            IsAutoSending = true;
             NotifyPropertyChanged(nameof(AutoSendCommand));
-            // NotifyPropertyChanged(nameof(AutoSendStatus));
             Task.Run(async () =>
                 {
-                    while (!cancellationToken.IsCancellationRequested)
+                    while (!cancellationToken.IsCancellationRequested
+                           && WriteData())
                     {
-                        SendData();
+                        ChatMessageCollection.Add(new ChatMessage
+                        {
+                            Message = NewMessage, Time = DateTime.Now
+                        });
                         await Task.Delay(CurrentSettings.Frequency,
                             cancellationToken);
                     }
+
+                    StopAutoSend();
                 },
                 cancellationToken);
         }
@@ -265,9 +319,24 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
         private void StopAutoSend()
         {
             _cancellationTokenSource.Cancel();
-            _isAutoSending = false;
+            IsAutoSending = false;
+            NewMessage = null;
             NotifyPropertyChanged(nameof(AutoSendCommand));
-            // NotifyPropertyChanged(nameof(AutoSendStatus));
+        }
+
+        private async void GetCurrentLocation()
+        {
+            var location = await _locationService.GetLocation();
+            if (location != null)
+            {
+                NewMessage =
+                    $"{AppResources.Longitude}: {location.Longitude}, {AppResources.Latitude}: {location.Latitude}, {AppResources.Altitude}: {location.Altitude}";
+            }
+            else
+            {
+                ToastService.ToastShortMessage(AppResources
+                    .Get_Location_Failed);
+            }
         }
 
         #endregion
@@ -296,37 +365,40 @@ namespace AndroidUsbSerialAssistant.ViewModels.Navigation
 
         private void UpdateReceivedData(byte[] data)
         {
-            Log.Info("SerialInputOutputManager", "Received");
-
-            // Read {data.Length} bytes:\n
-
             var message = IsHex
-                ? $"Hex: {FormatConverter.ByteArrayToHexString(data)}\nËß£Á†Å: {FormatConverter.ByteArrayToString(data)}\n\n"
-                : $"ËøúÁ´Ø: {FormatConverter.ByteArrayToString(data)}\n";
-            RECEIVED_OUT_PUT.Append(message);
+                ? $"Hex: {FormatConverter.ByteArrayToHexString(data)}\nΩ‚¬Î: {FormatConverter.ByteArrayToString(data)}"
+                : $"{FormatConverter.ByteArrayToString(data)}";
+            ChatMessageCollection.Add(new ChatMessage
+            {
+                Message = message, Time = DateTime.Now, IsReceived = true
+            });
             _receivedDataCount++;
-            NotifyPropertyChanged(nameof(ReceivedOutPut));
             NotifyPropertyChanged(nameof(ReceivedDataCount));
-            MessagingCenter.Send<object>(this, "DataReceived");
         }
 
-        private void WriteData(byte[] data)
+        private bool WriteData()
         {
-            if (_serialIoManager.IsOpen)
-            {
-                try
-                {
-                    _port.Write(data, UsbWriteDataTimeOut);
-                }
-                catch (Exception)
-                {
-                    ToastService.ToastShortMessage(AppResources.Write_Failed);
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(NewMessage)
+                || !_serialIoManager.IsOpen) return false;
+            var data = IsHex
+                ? FormatConverter.HexStringToByteArray(
+                    NewMessage.Replace(Environment.NewLine, " "))
+                : FormatConverter.StringToByteArray(
+                    NewMessage.Replace(Environment.NewLine, " "));
 
-                _sentDataCount++;
-                NotifyPropertyChanged(nameof(SentDataCount));
+            try
+            {
+                _port.Write(data, UsbWriteDataTimeOut);
             }
+            catch (Exception)
+            {
+                ToastService.ToastShortMessage(AppResources.Write_Failed);
+                return false;
+            }
+
+            _sentDataCount++;
+            NotifyPropertyChanged(nameof(SentDataCount));
+            return true;
         }
 
         #endregion
