@@ -124,9 +124,11 @@
                                         </Grid.RowDefinitions>
 
                                         <!--  Extendable Editor  -->
-                                        <controls:BorderlessEditor
-                                            Style="{StaticResource ChatMessageEditorStyle}"
-                                            Text="{Binding NewMessage}" />
+                                        <ScrollView>
+                                            <controls:BorderlessEditor
+                                                Style="{StaticResource ChatMessageEditorStyle}"
+                                                Text="{Binding NewMessage}" />
+                                        </ScrollView>
 
                                         <!--  GPS Button  -->
                                         <buttons:SfButton

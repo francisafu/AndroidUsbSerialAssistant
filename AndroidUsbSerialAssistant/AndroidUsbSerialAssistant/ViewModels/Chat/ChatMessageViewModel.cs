@@ -324,7 +324,10 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
             var location = await _locationService.GetLocation();
             if (location != null)
                 NewMessage =
-                    $"{AppResources.Longitude}: {location.Longitude:N6}, {AppResources.Latitude}: {location.Latitude:N6}, {AppResources.Altitude}: {location.Altitude:N2}";
+                    $"{AppResources.Longitude}: {location.Longitude:N6}, {AppResources.Latitude}: {location.Latitude:N6}" +
+                    (location.Altitude == null
+                        ? ""
+                        : $", {AppResources.Altitude}: {location.Altitude:N2}");
             else
                 ToastService.ToastShortMessage(AppResources
                     .Get_Location_Failed);
