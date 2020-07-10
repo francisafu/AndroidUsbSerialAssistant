@@ -71,6 +71,8 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         private ObservableCollection<ChatMessage> _chatMessageCollection =
             new ObservableCollection<ChatMessage>();
 
+        private bool _isGettingLocation;
+
         #endregion
 
         #region Public Properties
@@ -78,6 +80,16 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         public string CurrentDeviceName { get; private set; }
 
         public bool IsHex { get; set; }
+
+        public bool IsGettingLocation
+        {
+            get => _isGettingLocation;
+            set
+            {
+                _isGettingLocation = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public string ReceivedDataCount =>
             $"{AppResources.Received}: {_receivedDataCount}";
@@ -320,8 +332,9 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
 
         private async void GetCurrentLocation()
         {
-            // TODO: Syncfusion Busy Indicator
+            IsGettingLocation = true;
             var location = await _locationService.GetLocation();
+            IsGettingLocation = false;
             if (location != null)
                 NewMessage =
                     $"{AppResources.Longitude}: {location.Longitude:N6}, {AppResources.Latitude}: {location.Latitude:N6}" +

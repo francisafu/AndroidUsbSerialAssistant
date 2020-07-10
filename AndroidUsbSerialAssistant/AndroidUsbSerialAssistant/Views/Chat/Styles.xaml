@@ -7,7 +7,8 @@
     xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:control="clr-namespace:AndroidUsbSerialAssistant.Controls"
-    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms">
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
 
     <Color x:Key="Transparent">Transparent</Color>
 
@@ -185,6 +186,14 @@
                 </gradient:SfLinearGradientBrush>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="BusyIndicatorStyle" TargetType="xForms:SfBusyIndicator">
+        <Setter Property="AnimationType" Value="Globe" />
+        <Setter Property="ViewBoxWidth" Value="30" />
+        <Setter Property="ViewBoxHeight" Value="30" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="Duration" Value="1" />
     </Style>
 
 </ResourceDictionary>
