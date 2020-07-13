@@ -35,6 +35,7 @@ namespace AndroidUsbSerialAssistant.Services
         {
             var drivers = await FindAllDriversAsync(usbManager);
             var ports = drivers.SelectMany(driver => driver.Ports).ToList();
+            //TODO: List All Available Ports
             return ports[0];
         }
 

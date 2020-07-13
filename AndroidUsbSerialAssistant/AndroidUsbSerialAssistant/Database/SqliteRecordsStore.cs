@@ -37,10 +37,5 @@ namespace AndroidUsbSerialAssistant.Database
         {
             return await _connection.DeleteAsync(records);
         }
-
-        public async Task<IEnumerable<Records>> GetAllSentAsync()
-        {
-            return await _connection.Table<Records>().ToListAsync();
-        }
     }
 }

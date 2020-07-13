@@ -386,7 +386,7 @@ namespace AndroidUsbSerialAssistant.ViewModels.Chat
         private bool WriteData()
         {
             if (string.IsNullOrWhiteSpace(NewMessage)
-                || !_serialIoManager.IsOpen) return false;
+                || _serialIoManager == null || !_serialIoManager.IsOpen) return false;
             var data = IsHex
                 ? FormatConverter.HexStringToByteArray(
                     NewMessage.Replace(Environment.NewLine, " "))
