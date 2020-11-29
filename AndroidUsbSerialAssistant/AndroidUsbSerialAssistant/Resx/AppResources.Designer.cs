@@ -151,6 +151,15 @@ namespace AndroidUsbSerialAssistant.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Getting Location... 的本地化字符串。
+        /// </summary>
+        public static string Getting_Location {
+            get {
+                return ResourceManager.GetString("Getting Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Hex 的本地化字符串。
         /// </summary>
         public static string Hex {

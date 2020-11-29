@@ -12,6 +12,8 @@
     xmlns:local="clr-namespace:AndroidUsbSerialAssistant.Views.Chat"
     xmlns:viewModel="clr-namespace:AndroidUsbSerialAssistant.ViewModels.Chat"
     xmlns:behaviors="clr-namespace:AndroidUsbSerialAssistant.Behaviors;assembly=AndroidUsbSerialAssistant"
+    xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:resx="clr-namespace:AndroidUsbSerialAssistant.Resx;assembly=AndroidUsbSerialAssistant"
     BackgroundImage="ChatMessageBackground.png"
     NavigationPage.HasNavigationBar="False">
 
@@ -32,6 +34,12 @@
     <ContentPage.Content>
 
         <Grid>
+
+            <busyIndicator:SfBusyIndicator
+                Style="{StaticResource BusyIndicatorStyle}"
+                Title="{x:Static resx:AppResources.Getting_Location}"
+                IsBusy="{Binding IsGettingLocation}" />
+
             <ScrollView>
 
                 <!--  List view to show the recent chat history  -->
@@ -98,6 +106,7 @@
                     <!--  New Text Entry  -->
                     <listView:SfListView.FooterTemplate>
                         <DataTemplate>
+
                             <Grid Padding="16,5,16,5" ColumnSpacing="16">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -124,9 +133,11 @@
                                         </Grid.RowDefinitions>
 
                                         <!--  Extendable Editor  -->
-                                        <controls:BorderlessEditor
-                                            Style="{StaticResource ChatMessageEditorStyle}"
-                                            Text="{Binding NewMessage}" />
+                                        <ScrollView>
+                                            <controls:BorderlessEditor
+                                                Style="{StaticResource ChatMessageEditorStyle}"
+                                                Text="{Binding NewMessage}" />
+                                        </ScrollView>
 
                                         <!--  GPS Button  -->
                                         <buttons:SfButton
