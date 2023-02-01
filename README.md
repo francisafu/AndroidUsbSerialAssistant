@@ -107,6 +107,3 @@ PS. When I was coding on this project, I found those original copyright announce
   Portions of this library are based on Xamarin USB Serial for Android (https://bitbucket.org/lusovu/xamarinusbserial).
   Portions of this library are based on UsbSerialForAndroid (https://github.com/anotherlab/UsbSerialForAndroid) 
  ```
-
-## Author Says...
-This library is under LGPL because the original libraries are base on LGPL. However, you can modify it freely for commercial or non-commercial use. All I need is a **STAR**. If this project simple your work and save your life, please give me a star. I need that for a job, Thank you.
